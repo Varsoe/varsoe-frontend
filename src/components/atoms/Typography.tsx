@@ -9,6 +9,7 @@ type TextProps = {
   ml?: string;
   mb?: string;
   mt?: string;
+  textAlign?: 'left' | 'right' | 'justify';
 };
 
 // type HeadingProps = TextProps & {
@@ -47,6 +48,7 @@ const Paragraph = styled.p<TextProps>`
   line-height: 24px;
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : props.theme.fontWeights.regular)};
   margin: 0;
+  text-align: ${(props) => (props.textAlign ? props.textAlign : 'left')};
 `;
 
 const HeadingTag = ({ type, children, ...props }: { children: React.ReactNode; type: keyof typeof tagMapping }) =>

@@ -7,8 +7,12 @@ import Button from '../../../../components/atoms/Form/Button';
 import Typography from '../../../../components/atoms/Typography';
 import Avatar from '../../../../icons/Avatar';
 import CaretDownBorder from '../../../../icons/CaretDownBorder';
+import CloseIcon from '../../../../icons/CloseIcon';
+import CopyIcon from '../../../../icons/CopyIcon';
 import Folder from '../../../../icons/Folder';
+import LinkIcon from '../../../../icons/LinkIcon';
 import { BoxWithBorder, FlexWithBorder } from '../../styles';
+import { PaymentLink } from '../styled';
 
 interface InvoiceDetailsContainerProps {
   show?: boolean;
@@ -55,14 +59,6 @@ const UserData = styled(Flex)`
   margin: 24px 0;
 `;
 
-const PaymentLink = styled(Flex)`
-  background-color: ${(props) => props.theme.colors.black[20]};
-  border: 1px solid #e6e7ea;
-  padding: 16px;
-  border-radius: 8px;
-  margin-top: 8px;
-`;
-
 const ItemsContainer = styled(motion(Box))``;
 
 const border = '1px solid #F5F5F7';
@@ -89,19 +85,8 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
       amount: '$4,000.00',
     },
   ];
-  // const ref = useRef<HTMLDivElement>();
   console.log(show);
-  // useEffect(() => {
-  //   const handleClick = (e: MouseEvent) => {
-  //     if (ref.current && !ref.current.contains(e.target as Node)) {
-  //       setShowInvoice(false);
-  //     }
-  //   };
-  //   document.addEventListener('click', handleClick);
-  //   return () => {
-  //     document.removeEventListener('click', handleClick);
-  //   };
-  // });
+
   const theme = React.useContext(ThemeContext);
   const [itemOpened, setItemOpened] = React.useState(false);
   return (
@@ -126,7 +111,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
         >
           <Typography.Paragraph color={theme.colors.black[400]}>Invoice details</Typography.Paragraph>
           <Button variant="transparent" onClick={() => setShowInvoice(false)}>
-            Close
+            <CloseIcon />
           </Button>
         </FlexWithBorder>
         <Box padding="20px 16px">
@@ -151,8 +136,12 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
           </BoxWithBorder>
           <Box margin="24px 0">
             <Typography.Paragraph color={theme.colors.black[400]}>Payment Link</Typography.Paragraph>
-            <PaymentLink>
+            <PaymentLink justifyContent="space-between">
               <Typography.Paragraph>pay.varsoe.com/invoice2311_damola...</Typography.Paragraph>
+              <Flex>
+                <LinkIcon />
+                <CopyIcon />
+              </Flex>
             </PaymentLink>
           </Box>
           <BoxWithBorder margin="24px 0" borderBottom={border} paddingBottom="16px">

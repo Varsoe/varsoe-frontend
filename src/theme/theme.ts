@@ -4,6 +4,7 @@ export const theme = {
   fontSizes,
   colors: {
     white: '#fff',
+    transparent: 'transparent',
     randomRed: '#FF2E6A',
     statusGreen: '#005E04',
     statusRed: '#CA003A',

@@ -5,12 +5,15 @@ import styled from 'styled-components';
 import TableDropDownIcon from '../../icons/TableDropDown';
 import Button from '../atoms/Form/Button';
 
-export interface DropDownProps {}
+export interface DropDownProps {
+  iconColor?: string;
+  width?: string;
+}
 const DropDownBody = styled(motion(Box))`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 2px 2px 4px rgba(8, 19, 45, 0.04), -2px -2px 8px rgba(8, 19, 45, 0.04);
   border-radius: 8px;
-  min-width: 230px;
+  min-width: ${(props) => (props.width ? props.width : '230px')};
   padding: 30px 15px;
   min-height: 100px;
   position: absolute;
@@ -21,7 +24,7 @@ const DropDownBody = styled(motion(Box))`
 const DropDownContainer = styled(Box)`
   position: relative;
 `;
-const DropDown: React.FC<DropDownProps> = ({ children }) => {
+const DropDown: React.FC<DropDownProps> = ({ children, iconColor, width }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropDownRef = useRef<HTMLDivElement>();
 
@@ -39,10 +42,11 @@ const DropDown: React.FC<DropDownProps> = ({ children }) => {
   return (
     <DropDownContainer ref={dropDownRef}>
       <Button variant="transparent" onClick={() => setIsOpen(true)}>
-        <TableDropDownIcon />
+        <TableDropDownIcon fill={iconColor} />
         <AnimatePresence>
           {isOpen && (
             <DropDownBody
+              width={width}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

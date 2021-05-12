@@ -11,12 +11,12 @@ const variantsToColorMap = {
     border: 'none',
   },
   outline: {
-    bg: theme.colors.white,
+    bg: theme.colors.transparent,
     color: theme.colors.blue[600],
     border: `1px solid ${theme.colors.blue[600]}`,
   },
   transparent: {
-    bg: theme.colors.white,
+    bg: theme.colors.transparent,
     color: theme.colors.blue[600],
     border: 'none',
   },
@@ -32,6 +32,7 @@ const ButtonStyle = styled.button<ButtonProps>`
   cursor: pointer;
   box-shadow: ${(props) => (props.shadow ? '4px 4px 8px rgba(90, 98, 115, 0.16);' : 'none')};
   width: ${(props) => (props.width ? props.width : 'auto')};
+  min-height: 48px;
   svg {
     width: 24px;
     height: 24px;

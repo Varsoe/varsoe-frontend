@@ -8,6 +8,8 @@ const Container = styled.div`
   max-width: 1350px;
   margin: 0 auto;
   padding: 0 1em;
+  position: relative;
+  z-index: 3;
 `;
 const Bg1 = styled(Box)`
   position: absolute;
