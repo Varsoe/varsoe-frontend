@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useHistory } from 'react-router';
 import { Box, Flex } from 'rebass';
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 import styled, { ThemeContext } from 'styled-components';
@@ -39,6 +40,7 @@ const Chart = () => (
   </ResponsiveContainer>
 );
 const DashboardIndex: React.FC<DashboardIndexProps> = () => {
+  const history = useHistory();
   const theme = React.useContext(ThemeContext);
   const [showInvoice, setShowInvoice] = React.useState(false);
   return (
@@ -46,7 +48,13 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
       <InvoiceDetails show={showInvoice} setShowInvoice={setShowInvoice} />
       <Flex alignItems="center" justifyContent="space-between">
         <Typography.Heading type="h5">Welcome Damola,</Typography.Heading>
-        <Button variant="primary" Icon={<InvoiceIcon />}>
+        <Button
+          variant="primary"
+          Icon={<InvoiceIcon />}
+          onClick={() => {
+            history.push('/invoices/create');
+          }}
+        >
           Create Invoice
         </Button>
       </Flex>
@@ -99,7 +107,7 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                 </Flex>
               </Box>
               <Box>
-                <Select>
+                <Select bg={theme.colors.selectBg}>
                   <option value="12months">12 Months</option>
                   <option value="10months">10 Months</option>
                   <option value="11months">11 Months</option>

@@ -1,5 +1,5 @@
 import { Box, Flex } from 'rebass';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { theme } from '../../../theme/theme';
@@ -33,6 +33,26 @@ const ButtonStyle = styled.button<ButtonProps>`
   box-shadow: ${(props) => (props.shadow ? '4px 4px 8px rgba(90, 98, 115, 0.16);' : 'none')};
   width: ${(props) => (props.width ? props.width : 'auto')};
   min-height: 48px;
+  ${({ mb }) =>
+    mb &&
+    css`
+      margin-bottom: ${mb};
+    `}
+  ${({ mt }) =>
+    mt &&
+    css`
+      margin-top: ${mt};
+    `}
+    ${({ mr }) =>
+    mr &&
+    css`
+      margin-right: ${mr};
+    `}
+    ${({ ml }) =>
+    ml &&
+    css`
+      margin-left: ${ml};
+    `}
   svg {
     width: 24px;
     height: 24px;
@@ -48,6 +68,10 @@ export interface ButtonProps {
   color?: string;
   fontSize?: string;
   width?: string;
+  mr?: string;
+  ml?: string;
+  mb?: string;
+  mt?: string;
   onClick?: () => void;
 }
 

@@ -2,14 +2,14 @@ import styled, { css } from 'styled-components';
 import Caret from '../../../assets/caret.svg';
 
 interface SelectProps {
-  color?: string;
+  bg?: string;
   disabled?: boolean;
 }
 const Select = styled.select<SelectProps>`
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  background-color: ${(props) => (props.color ? props.color : props.theme.colors.selectBg)};
+  background-color: ${(props) => (props.bg ? props.color : props.theme.colors.white)};
   background-image: url(${Caret});
   background-position: calc(100% - 1rem) 50%;
   background-size: 10px;
