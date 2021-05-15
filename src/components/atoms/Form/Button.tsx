@@ -32,7 +32,7 @@ const ButtonStyle = styled.button<ButtonProps>`
   cursor: pointer;
   box-shadow: ${(props) => (props.shadow ? '4px 4px 8px rgba(90, 98, 115, 0.16);' : 'none')};
   width: ${(props) => (props.width ? props.width : 'auto')};
-  min-height: 48px;
+  min-height: ${(props) => (props.variant === 'transparent' ? 'auto' : '48px')};
   ${({ mb }) =>
     mb &&
     css`

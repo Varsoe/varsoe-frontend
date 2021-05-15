@@ -5,15 +5,18 @@ import * as React from 'react';
 import CaretUp from '../../icons/CaretUp';
 import CaretDown from '../../icons/CaretDown';
 
-export interface TableProps {}
+export interface TableProps {
+  layout?: string;
+}
 const TableWrapper = styled(Box)`
   display: grid;
   grid-template-columns: 1fr;
 `;
-const TableContainer = styled.table`
+const TableContainer = styled.table<{ layout?: string }>`
   width: 100%;
   border-collapse: separate;
   border-spacing: 0 16px;
+  table-layout: ${(props) => (props.layout ? props.layout : 'initial')};
 `;
 
 const Td = styled.td`
@@ -32,8 +35,15 @@ const Td = styled.td`
     border-bottom-left-radius: 8px;
   }
 `;
-const Tr = styled.tr`
+const Tr = styled.tr<{ isDragging?: boolean }>`
   margin: 16px 0px;
+  display: ${({ isDragging }) => (isDragging ? 'table' : '')};
+  &:last-child {
+    td {
+      border: none;
+      margin-bottom: 0;
+    }
+  }
 `;
 const TBody = styled.tbody``;
 const ThStyle = styled.th`
@@ -52,9 +62,9 @@ const ThStyle = styled.th`
   }
 `;
 
-const Table: React.FC<PropsWithChildren<TableProps>> = ({ children }) => (
+const Table: React.FC<PropsWithChildren<TableProps>> = ({ children, layout }) => (
   <TableWrapper>
-    <TableContainer>{children}</TableContainer>
+    <TableContainer layout={layout}>{children}</TableContainer>
   </TableWrapper>
 );
 

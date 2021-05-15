@@ -8,14 +8,20 @@ const FormLabel = styled.label`
   font-size: 1.4rem;
 `;
 
-const Input = styled.input`
+interface InputProps {
+  width?: string;
+}
+const Input = styled.input<InputProps>`
   border: 1px solid #ced0d5;
   border-radius: 8px;
   height: 48px;
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : '100%')};
   padding: 16px 12px;
   &::placeholder {
     color: ${(props) => props.theme.colors.black[200]};
+  }
+  &::focus {
+    border: ${(props) => `1px solid ${props.theme.colors.blue[600]}`};
   }
 `;
 const Form = styled.form``;
