@@ -9,21 +9,25 @@ const variantsToColorMap = {
     bg: theme.colors.blue[600],
     color: theme.colors.white,
     border: 'none',
+    hoverBg: theme.colors.blue[600],
   },
   danger: {
     bg: theme.colors.red[600],
     color: theme.colors.white,
     border: 'none',
+    hoverBg: theme.colors.red[500],
   },
   outline: {
     bg: theme.colors.transparent,
     color: theme.colors.blue[600],
     border: `1px solid ${theme.colors.blue[600]}`,
+    hoverBg: theme.colors.blue[100],
   },
   transparent: {
     bg: theme.colors.transparent,
     color: theme.colors.blue[600],
     border: 'none',
+    hoverBg: theme.colors.transparent,
   },
 };
 
@@ -39,6 +43,11 @@ const ButtonStyle = styled.button<ButtonProps>`
   box-shadow: ${(props) => (props.shadow ? '4px 4px 8px rgba(90, 98, 115, 0.16);' : 'none')};
   width: ${(props) => (props.width ? props.width : 'auto')};
   min-height: ${(props) => (props.variant === 'transparent' ? 'auto' : '48px')};
+  box-shadow: ${(props) => (props.variant === 'transparent' ? 'none' : '4px 4px 8px rgba(90, 98, 115, 0.16)')};
+
+  &:hover {
+    background-color: ${(props) => variantsToColorMap[props.variant].hoverBg};
+  }
   ${({ mb }) =>
     mb &&
     css`
