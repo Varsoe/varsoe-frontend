@@ -10,6 +10,11 @@ const variantsToColorMap = {
     color: theme.colors.white,
     border: 'none',
   },
+  danger: {
+    bg: theme.colors.red[600],
+    color: theme.colors.white,
+    border: 'none',
+  },
   outline: {
     bg: theme.colors.transparent,
     color: theme.colors.blue[600],
@@ -23,6 +28,7 @@ const variantsToColorMap = {
 };
 
 const ButtonStyle = styled.button<ButtonProps>`
+  cursor: pointer;
   padding: ${(props) => (props.variant === 'transparent' ? '0' : '12px 16px')};
   background-color: ${(props) => variantsToColorMap[props.variant].bg};
   color: ${(props) => props.color || variantsToColorMap[props.variant].color};
@@ -59,7 +65,7 @@ const ButtonStyle = styled.button<ButtonProps>`
   }
 `;
 
-type Variants = 'primary' | 'transparent' | 'outline';
+type Variants = 'primary' | 'transparent' | 'outline' | 'danger';
 export interface ButtonProps {
   variant: Variants;
   Icon?: React.ReactNode;
@@ -97,6 +103,8 @@ export type ButtonLinkProps = LinkProps & ButtonProps & { variant?: Variants };
 const LinkStyle = styled(Link)<ButtonProps>`
   color: ${(props) => props.color || theme.colors.blue[600]};
   text-decoration: none;
+  display: block;
+  font-weight: ${({ theme: t }) => t.fontWeights.medium};
 `;
 export const ButtonLink: React.FC<React.PropsWithChildren<ButtonLinkProps>> = ({
   variant = 'transparent',

@@ -5,27 +5,11 @@ import Typography from '../../../../components/atoms/Typography';
 import Table from '../../../../components/molecules/Table';
 import CompanyLogo from '../../../../icons/CompanyLogo';
 import CompanyLogo2 from '../../../../icons/CompanyLogo2';
+import { CardContainer, InvoiceItemsContainer } from '../styled';
 
 export interface InvoiceDesignProps {}
 
 interface CardContainerProps {}
-const CardContainer = styled(Box)<CardContainerProps>`
-  background: ${(props) => props.theme.colors.white};
-  border: 0.4px solid #e6e7ea;
-  box-shadow: -1px -1px 8px rgba(8, 19, 45, 0.02), 1px 1px 8px rgba(8, 19, 45, 0.02);
-  border-radius: 8px;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-`;
-const InvoiceItemsContainer = styled(Box)`
-  background: ${(props) => props.theme.colors.white};
-  border: 1px solid #e6e7ea;
-  border-radius: 4px;
-  grid-column: 1 / -1;
-  padding: 16px 20px;
-  margin-top: 40px;
-`;
 
 const Th = styled.th<{ align?: 'left' | 'right' | 'center' }>`
   color: ${(props) => props.theme.colors.black[300]};
@@ -35,6 +19,7 @@ const Th = styled.th<{ align?: 'left' | 'right' | 'center' }>`
 
 const Td = styled.th<{ align?: 'left' | 'right' | 'center'; border?: string }>`
   color: ${(props) => props.theme.colors.black[600]};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
   border-bottom: ${(props) => (props.border ? props.border : `1px solid ${props.theme.colors.black[50]}`)};
 
   padding: 16px 16px 16px 0;
@@ -64,7 +49,7 @@ const InvoiceDesign: React.FC<InvoiceDesignProps> = () => {
             <Typography.Paragraph fontSize={1} color={theme.colors.black[400]}>
               Created On
             </Typography.Paragraph>
-            <Typography.Paragraph fontWeight="bold" mt="10px">
+            <Typography.Paragraph fontWeight="medium" mt="10px">
               24 Mar, 2021
             </Typography.Paragraph>
           </Box>
@@ -72,7 +57,7 @@ const InvoiceDesign: React.FC<InvoiceDesignProps> = () => {
             <Typography.Paragraph fontSize={1} color={theme.colors.black[400]}>
               Due on
             </Typography.Paragraph>
-            <Typography.Paragraph fontWeight="bold" mt="10px">
+            <Typography.Paragraph fontWeight="medium" mt="10px">
               24 Mar, 2021
             </Typography.Paragraph>
           </Box>
@@ -164,7 +149,13 @@ const InvoiceDesign: React.FC<InvoiceDesignProps> = () => {
         </Flex>
       </SubTotals>
       <FullGrid mt="24px">
-        <Typography.Paragraph fontSize={1} color={theme.colors.black[400]} mt="10px" textAlign="justify">
+        <Typography.Paragraph
+          fontSize={1}
+          fontWeight="medium"
+          color={theme.colors.black[300]}
+          mt="10px"
+          textAlign="justify"
+        >
           With this analogy, if you work on the island and live on the mainland, might as well not bother going to the
           office. At some income levels, the problem is not really an absence of financial discipline, it is just that
           cost of living is high

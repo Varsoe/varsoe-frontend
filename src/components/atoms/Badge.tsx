@@ -1,8 +1,9 @@
 import { Box } from 'rebass';
 import styled from 'styled-components';
 
+export type StatusColor = 'green' | 'red' | 'yellow' | 'blue';
 interface BadgeProps {
-  type: 'green' | 'red' | 'yellow' | 'blue';
+  type: StatusColor;
 }
 export const Badge = styled(Box)<BadgeProps>`
   display: inline-flex;

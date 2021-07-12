@@ -11,7 +11,7 @@ const Container = styled.div`
   position: relative;
   z-index: 3;
 `;
-const Bg1 = styled(Box)`
+export const Bg1 = styled(Box)`
   position: absolute;
   top: 0;
   left: 0;
@@ -24,7 +24,7 @@ const Bg1 = styled(Box)`
   width: 70vw;
   height: 428px;
 `;
-const Bg2 = styled(Box)`
+export const Bg2 = styled(Box)`
   position: absolute;
   top: 0;
   right: -20%;

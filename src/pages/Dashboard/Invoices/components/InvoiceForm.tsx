@@ -11,40 +11,23 @@ import {
   DropResult,
 } from 'react-beautiful-dnd';
 import Form from '../../../../components/atoms/Form';
-import Button from '../../../../components/atoms/Form/Button';
+import Button, { ButtonLink } from '../../../../components/atoms/Form/Button';
 import Typography from '../../../../components/atoms/Typography';
 import Table from '../../../../components/molecules/Table';
 import CloseRedIcon from '../../../../icons/CloseRedIcon';
 import DragIcon from '../../../../icons/DragIcon';
 import { FlexWithBorder } from '../../styles';
+import DropDown, { DropDownItem } from '../../../../components/molecules/DropDown';
+import { CardContainer, InvoiceItemsContainer } from '../styled';
 
 export interface InvoiceFormProps {}
 
-const CardContainer = styled(Box)`
-  background: ${(props) => props.theme.colors.white};
-  border: 0.4px solid #e6e7ea;
-  box-shadow: -1px -1px 8px rgba(8, 19, 45, 0.02), 1px 1px 8px rgba(8, 19, 45, 0.02);
-  border-radius: 8px;
-  padding: 24px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 400px;
-`;
 const ProfileIcon = styled(Box)`
   background-color: ${(props) => props.theme.colors.yellow[100]};
   border: 1px solid #fadea7;
   width: 80px;
   height: 80px;
   border-radius: 50%;
-`;
-
-const InvoiceItemsContainer = styled(Box)`
-  background: ${(props) => props.theme.colors.white};
-  border: 1px solid #e6e7ea;
-  border-radius: 4px;
-  grid-column: 1 / -1;
-  padding: 16px 20px;
-  margin-top: 40px;
 `;
 
 const Th = styled.th<{ align?: 'left' | 'right' | 'center' }>`
@@ -66,13 +49,25 @@ const FullGrid = styled(Box)`
   grid-column: 1/-1;
 `;
 
+const CurrencyChangeButton = styled.button`
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-decoration: underline;
+  font-size: 1.4rem;
+  line-height: 20px;
+  color: ${(props) => props.theme.colors.black[400]};
+  cursor: pointer;
+`;
+
 const border = '1px solid #E6E7EA';
 interface ItemProps {
   id: string;
 }
+const DEFAULT_ITEM = { id: uuidv4() };
 const InvoiceForm: React.FC<InvoiceFormProps> = () => {
   const theme = useTheme();
-  const [items, setItems] = useState<ItemProps[]>([]);
+  const [items, setItems] = useState<ItemProps[]>([DEFAULT_ITEM]);
 
   const handleChange = () => {};
   const addItem = () => {
@@ -104,7 +99,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
     <CardContainer>
       <Box>
         <ProfileIcon />
-        <Box flex="1" maxWidth="200px">
+        <Box flex="1" maxWidth="280px">
           <Form.FormGroup mb="24px" mt="24px">
             <Form.Label>Invoice Date</Form.Label>
             <Form.Input placeholder="Select date" />
@@ -117,11 +112,34 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
             <Form.Label>Title</Form.Label>
             <Form.Input placeholder="Enter a title" />
           </Form.FormGroup>
+          <Flex>
+            <Typography.Paragraph fontSize={1} color={theme.colors.black[400]}>
+              Your currency is USD.
+            </Typography.Paragraph>
+            <DropDown
+              iconColor={theme.colors.blue[600]}
+              width="70px"
+              header={<CurrencyChangeButton>Change currency</CurrencyChangeButton>}
+            >
+              <Box>
+                <DropDownItem>
+                  <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
+                    USD
+                  </ButtonLink>
+                </DropDownItem>
+                <DropDownItem>
+                  <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
+                    NGN
+                  </ButtonLink>
+                </DropDownItem>
+              </Box>
+            </DropDown>
+          </Flex>
         </Box>
       </Box>
 
       <Flex justifyContent="flex-end">
-        <Box flex="1" maxWidth="200px">
+        <Box flex="1" maxWidth="280px">
           <Form.FormGroup mb="32px">
             <Form.Label>Invoice No.</Form.Label>
             <Form.Input placeholder="Select or add new customer" />
@@ -129,7 +147,9 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
           <Typography.Paragraph fontSize={1} color={theme.colors.black[400]} mt="10px">
             Invoice For:
           </Typography.Paragraph>
-          <Typography.Paragraph fontWeight="bold">Acme LLC</Typography.Paragraph>
+          <Typography.Paragraph fontWeight="bold" color={theme.colors.black[400]}>
+            Acme LLC
+          </Typography.Paragraph>
           <Typography.Paragraph fontSize={1} color={theme.colors.black[400]} mt="10px">
             No 4 and 6 Radiators Spring, Lightning Estate, <br />
             Lagos, Nigeria
@@ -168,7 +188,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
                           </Td>
                           <Td>
                             <Typography.Paragraph fontWeight="bold" textAlign="right">
-                              {id.substr(0, 5)}
+                              $0
                             </Typography.Paragraph>
                           </Td>
                           <Td>
@@ -200,7 +220,6 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
           padding="15px 0"
         >
           <Button variant="transparent" onClick={addItem}>
-            {' '}
             + &nbsp; Add Item
           </Button>
         </FlexWithBorder>

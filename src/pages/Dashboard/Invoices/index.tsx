@@ -7,8 +7,9 @@ import { Badge } from '../../../components/atoms/Badge';
 import Button, { ButtonLink } from '../../../components/atoms/Form/Button';
 import Select from '../../../components/atoms/Form/Select';
 import Typography from '../../../components/atoms/Typography';
-import DropDown from '../../../components/molecules/DropDown';
+import DropDown, { DropDownItem } from '../../../components/molecules/DropDown';
 import Table from '../../../components/molecules/Table';
+import { statusMapping } from '../../../constants';
 import { chartData } from '../../../data';
 import Filter from '../../../icons/Filter';
 import InvoiceIcon from '../../../icons/InvoiceIcon';
@@ -33,12 +34,52 @@ const Chart = () => (
           <stop offset="78.34%" stopColor="rgba(5, 85, 255)" stopOpacity={0} />
         </linearGradient>
       </defs>
-      <XAxis dataKey="name" axisLine={false} tickLine={false} padding={{ left: 10 }} tick={{ color: '#848996' }} />
+      <XAxis
+        dataKey="name"
+        axisLine={false}
+        tickLine={false}
+        padding={{ left: 10 }}
+        tick={{ color: '#848996', fontSize: '14px' }}
+      />
       <Tooltip />
       <Area type="monotone" dataKey="uv" stroke="#0555FF" fillOpacity={1} fill="url(#colorUv)" />
     </AreaChart>
   </ResponsiveContainer>
 );
+const tableData = [
+  {
+    id: 1,
+    status: 'sent',
+    date: '12 Mar 2021',
+    name: 'Adegoke Damola',
+    project: 'Varsoe Mobile App',
+    amount: '$34,0000',
+  },
+  {
+    id: 2,
+    status: 'pending',
+    date: '12 Mar 2021',
+    name: 'Bro Jack',
+    project: 'Varsoe Mobile App',
+    amount: '$34,0000',
+  },
+  {
+    id: 3,
+    status: 'paid',
+    date: '12 Mar 2021',
+    name: 'Test Martin',
+    project: 'Varsoe Mobile App',
+    amount: '$34,0000',
+  },
+  {
+    id: 4,
+    status: 'overdue',
+    date: '12 Mar 2021',
+    name: 'Test Martin',
+    project: 'Varsoe Mobile App',
+    amount: '$34,0000',
+  },
+];
 const DashboardIndex: React.FC<DashboardIndexProps> = () => {
   const history = useHistory();
   const theme = React.useContext(ThemeContext);
@@ -137,182 +178,57 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
             <Table.Th>Quick actions</Table.Th>
           </Table.Tr>
           <Table.TBody>
-            <Table.Tr>
-              <Table.Td>
-                <Badge type="blue">Sent</Badge>
-              </Table.Td>
-              <Table.Td>12 Mar 2021</Table.Td>
-              <Table.Td>Adegoke Damola</Table.Td>
-              <Table.Td>Varsoe Mobile App</Table.Td>
-              <Table.Td>
-                <Typography.Paragraph color={theme.colors.green[600]}>$34,0000</Typography.Paragraph>
-              </Table.Td>
-              <Table.Td>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Button variant="transparent" onClick={() => setShowInvoice(true)}>
-                    View
-                  </Button>
-                  <Box>
-                    <DropDown>
-                      <Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
-                            View
-                          </ButtonLink>
+            {tableData.map(({ id, status, date, name, project, amount }) => (
+              <Table.Tr key={id}>
+                <Table.Td>
+                  <Badge type={statusMapping[status].color}>{statusMapping[status].text}</Badge>
+                </Table.Td>
+                <Table.Td>{date}</Table.Td>
+                <Table.Td>{name}</Table.Td>
+                <Table.Td>{project}</Table.Td>
+                <Table.Td>
+                  <Typography.Paragraph color={theme.colors.green[600]}>{amount}</Typography.Paragraph>
+                </Table.Td>
+                <Table.Td>
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Button variant="transparent" onClick={() => setShowInvoice(true)}>
+                      View
+                    </Button>
+                    <Box>
+                      <DropDown width="200px">
+                        <Box>
+                          <DropDownItem>
+                            <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
+                              View
+                            </ButtonLink>
+                          </DropDownItem>
+                          <DropDownItem>
+                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
+                              Edit
+                            </ButtonLink>
+                          </DropDownItem>
+                          <DropDownItem>
+                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
+                              Create payment link
+                            </ButtonLink>
+                          </DropDownItem>
+                          <DropDownItem>
+                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
+                              Duplicate
+                            </ButtonLink>
+                          </DropDownItem>
+                          <DropDownItem>
+                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
+                              Delete
+                            </ButtonLink>
+                          </DropDownItem>
                         </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Edit
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Create payment link
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Duplicate
-                          </ButtonLink>
-                        </Box>
-                      </Box>
-                    </DropDown>
-                  </Box>
-                </Flex>
-              </Table.Td>
-            </Table.Tr>
-            <Table.Tr>
-              <Table.Td>
-                <Badge type="red">Overdue</Badge>
-              </Table.Td>
-              <Table.Td>12 Mar 2021</Table.Td>
-              <Table.Td>Adegoke Damola</Table.Td>
-              <Table.Td>Varsoe Mobile App</Table.Td>
-              <Table.Td>
-                <Typography.Paragraph color={theme.colors.green[600]}>$34,0000</Typography.Paragraph>
-              </Table.Td>
-              <Table.Td>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Button variant="transparent" onClick={() => setShowInvoice(true)}>
-                    View
-                  </Button>
-                  <Box>
-                    <DropDown>
-                      <Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
-                            View
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Edit
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Create payment link
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Duplicate
-                          </ButtonLink>
-                        </Box>
-                      </Box>
-                    </DropDown>
-                  </Box>
-                </Flex>
-              </Table.Td>
-            </Table.Tr>
-            <Table.Tr>
-              <Table.Td>
-                <Badge type="yellow">Pending</Badge>
-              </Table.Td>
-              <Table.Td>12 Mar 2021</Table.Td>
-              <Table.Td>Adegoke Damola</Table.Td>
-              <Table.Td>Varsoe Mobile App</Table.Td>
-              <Table.Td>
-                <Typography.Paragraph color={theme.colors.green[600]}>$34,0000</Typography.Paragraph>
-              </Table.Td>
-              <Table.Td>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Button variant="transparent" onClick={() => setShowInvoice(true)}>
-                    View
-                  </Button>
-                  <Box>
-                    <DropDown>
-                      <Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
-                            View
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Edit
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Create payment link
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Duplicate
-                          </ButtonLink>
-                        </Box>
-                      </Box>
-                    </DropDown>
-                  </Box>
-                </Flex>
-              </Table.Td>
-            </Table.Tr>
-            <Table.Tr>
-              <Table.Td>
-                <Badge type="green">Pending</Badge>
-              </Table.Td>
-              <Table.Td>12 Mar 2021</Table.Td>
-              <Table.Td>Adegoke Damola</Table.Td>
-              <Table.Td>Varsoe Mobile App</Table.Td>
-              <Table.Td>
-                <Typography.Paragraph color={theme.colors.green[600]}>$34,0000</Typography.Paragraph>
-              </Table.Td>
-              <Table.Td>
-                <Flex justifyContent="space-between" alignItems="center">
-                  <Button variant="transparent" onClick={() => setShowInvoice(true)}>
-                    View
-                  </Button>
-                  <Box>
-                    <DropDown>
-                      <Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
-                            View
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Edit
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Create payment link
-                          </ButtonLink>
-                        </Box>
-                        <Box py="12px" px="16px">
-                          <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                            Duplicate
-                          </ButtonLink>
-                        </Box>
-                      </Box>
-                    </DropDown>
-                  </Box>
-                </Flex>
-              </Table.Td>
-            </Table.Tr>
+                      </DropDown>
+                    </Box>
+                  </Flex>
+                </Table.Td>
+              </Table.Tr>
+            ))}
           </Table.TBody>
         </Table.Table>
       </Box>

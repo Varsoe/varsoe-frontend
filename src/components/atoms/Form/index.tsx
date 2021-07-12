@@ -1,11 +1,13 @@
 import { Box } from 'rebass';
 import styled, { css } from 'styled-components';
 import Select from './Select';
+import SelectAdd from './SelectAdd';
 
 const FormLabel = styled.label`
   margin-bottom: 10px;
   display: inline-block;
   font-size: 1.4rem;
+  color: ${(props) => props.theme.colors.black[600]};
 `;
 
 interface InputProps {
@@ -60,4 +62,5 @@ export default {
   Form,
   Select,
   Input,
+  SelectAdd,
 };

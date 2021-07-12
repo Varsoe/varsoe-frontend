@@ -1,10 +1,13 @@
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useRef } from 'react';
+import { useHistory } from 'react-router';
+
 import { Box, Flex } from 'rebass';
 import styled, { ThemeContext } from 'styled-components';
 import { Badge } from '../../../../components/atoms/Badge';
-import Button from '../../../../components/atoms/Form/Button';
+import Button, { ButtonLink } from '../../../../components/atoms/Form/Button';
 import Typography from '../../../../components/atoms/Typography';
+import useOnClickOutside from '../../../../hooks/ClickOutsideClose';
 import Avatar from '../../../../icons/Avatar';
 import CaretDownBorder from '../../../../icons/CaretDownBorder';
 import CloseIcon from '../../../../icons/CloseIcon';
@@ -24,12 +27,12 @@ export interface InvoiceDetailsProps extends InvoiceDetailsContainerProps {
 const InvoiceDetailsContainer = styled(motion.div)<InvoiceDetailsContainerProps>`
   position: fixed;
   top: 10px;
-  right: 20px;
+  right: 10px;
   max-width: 440px;
-  min-height: 800px;
+  min-height: calc(100% - 20px);
+  bottom: 10px;
   width: 30%;
   min-width: 250px;
-  right: ${(props) => (props.show ? '20px' : '-100%')};
   background-color: ${(props) => props.theme.colors.white};
   opacity: 1;
   z-index: 5;
@@ -59,6 +62,13 @@ const UserData = styled(Flex)`
   margin: 24px 0;
 `;
 
+const ButtonWrapper = styled(Flex)`
+  background-color: ${(props) => props.theme.colors.white};
+  margin-top: 32px;
+  z-index: 3;
+  position: relative;
+`;
+
 const ItemsContainer = styled(motion(Box))``;
 
 const border = '1px solid #F5F5F7';
@@ -85,10 +95,14 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
       amount: '$4,000.00',
     },
   ];
-  console.log(show);
-
+  const history = useHistory();
   const theme = React.useContext(ThemeContext);
   const [itemOpened, setItemOpened] = React.useState(false);
+  const previewRef = useRef(null);
+  const handleClickOutside = () => {
+    setShowInvoice(false);
+  };
+  useOnClickOutside(previewRef, handleClickOutside);
   return (
     <>
       {show && <InvoiceDetailsBg />}
@@ -97,6 +111,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
         animate={{ x: show ? '0' : '100%', opacity: show ? 1 : 0 }}
         initial={{ x: '100%' }}
         exit={{ x: '0', opacity: 0 }}
+        ref={previewRef}
         transition={{
           type: 'tween',
           duration: 0.2,
@@ -139,8 +154,12 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
             <PaymentLink justifyContent="space-between">
               <Typography.Paragraph>pay.varsoe.com/invoice2311_damola...</Typography.Paragraph>
               <Flex>
-                <LinkIcon />
-                <CopyIcon />
+                <Button variant="transparent">
+                  <LinkIcon />
+                </Button>
+                <Button variant="transparent">
+                  <CopyIcon />
+                </Button>
               </Flex>
             </PaymentLink>
           </Box>
@@ -178,9 +197,9 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
               ))}
             </ItemsContainer>
           </BoxWithBorder>
-          <Flex backgroundColor={theme.colors.white} marginTop="32px">
+          <ButtonWrapper>
             <Box flex="1" backgroundColor={theme.colors.white}>
-              <Button variant="outline" width="100%">
+              <Button variant="outline" width="100%" onClick={() => history.push('/invoices/view')}>
                 View Invoice
               </Button>
             </Box>
@@ -189,7 +208,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
                 Mark as paid
               </Button>
             </Box>
-          </Flex>
+          </ButtonWrapper>
         </Box>
       </InvoiceDetailsContainer>
     </>
