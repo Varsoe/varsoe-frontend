@@ -9,7 +9,7 @@ const variantsToColorMap = {
     bg: theme.colors.blue[600],
     color: theme.colors.white,
     border: 'none',
-    hoverBg: theme.colors.blue[600],
+    hoverBg: theme.colors.blue[500],
   },
   danger: {
     bg: theme.colors.red[600],

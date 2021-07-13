@@ -5,7 +5,6 @@ import Form from '../../../../components/atoms/Form';
 import Button from '../../../../components/atoms/Form/Button';
 import Typography from '../../../../components/atoms/Typography';
 import Modal from '../../../../components/molecules/Modal';
-import CloseRedIcon from '../../../../icons/CloseRedIcon';
 import CloseWhite from '../../../../icons/CloseWhite';
 import { theme } from '../../../../theme/theme';
 

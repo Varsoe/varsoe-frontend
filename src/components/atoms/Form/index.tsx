@@ -2,6 +2,7 @@ import { Box } from 'rebass';
 import styled, { css } from 'styled-components';
 import Select from './Select';
 import SelectAdd from './SelectAdd';
+import Date from './Date';
 
 const FormLabel = styled.label`
   margin-bottom: 10px;
@@ -63,4 +64,5 @@ export default {
   Select,
   Input,
   SelectAdd,
+  Date,
 };

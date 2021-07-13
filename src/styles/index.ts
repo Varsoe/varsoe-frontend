@@ -26,4 +26,27 @@ body {
 button {
   font-family: "Wigrum";
 }
+
+.DayPickerInput {
+  font-family: 'Wigrum';
+  display: block;
+  font-size: 14px;
+  
+}
+.DayPickerInput input {
+  border: 1px solid #ced0d5;
+  border-radius: 8px;
+  height: 48px;
+  width: 100%;
+  padding: 16px 12px;
+  &::placeholder {
+    color: #ADB0B9;
+  }
+  &::focus {
+    border: 1px solid #08132D;
+  }
+}
+.DayPicker-Month{
+  width: 200px;
+}
 `;

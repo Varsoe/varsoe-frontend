@@ -148,11 +148,20 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                 </Flex>
               </Box>
               <Box>
-                <Select bg={theme.colors.selectBg}>
-                  <option value="12months">12 Months</option>
-                  <option value="10months">10 Months</option>
-                  <option value="11months">11 Months</option>
-                </Select>
+                <Flex justifyContent="space-between" flex="0.4" alignItems="center" height="50%">
+                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                    1 month
+                  </Button>
+                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                    6 month
+                  </Button>
+                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                    1 year
+                  </Button>
+                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                    Custom
+                  </Button>
+                </Flex>
               </Box>
             </Flex>
             <Chart />

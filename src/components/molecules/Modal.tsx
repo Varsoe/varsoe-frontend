@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import { Box } from 'rebass';
 import styled from 'styled-components';
 import * as React from 'react';
+import useOnClickOutside from '../../hooks/ClickOutsideClose';
 
 export interface ModalProps {
   showModal: boolean;
@@ -67,20 +68,27 @@ const Content = styled(Box)`
   z-index: 45;
 `;
 
-const Modal: React.FC<PropsWithChildren<ModalProps>> = ({ children, showModal }) => (
-  <>
-    <AnimatePresence>
-      {showModal && (
-        <ModalBg>
-          <ModalContent>
-            <Bg1 />
-            <Bg2 />
-            <Content>{children}</Content>
-          </ModalContent>
-        </ModalBg>
-      )}
-    </AnimatePresence>
-  </>
-);
+const Modal: React.FC<PropsWithChildren<ModalProps>> = ({ children, showModal, setShowModal }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const handleClickOutside = () => {
+    setShowModal(false);
+  };
+  useOnClickOutside(ref, handleClickOutside);
+  return (
+    <>
+      <AnimatePresence>
+        {showModal && (
+          <ModalBg>
+            <ModalContent ref={ref}>
+              <Bg1 />
+              <Bg2 />
+              <Content>{children}</Content>
+            </ModalContent>
+          </ModalBg>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
 
 export default Modal;

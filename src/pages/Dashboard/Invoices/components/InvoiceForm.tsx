@@ -95,6 +95,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
     setItems(newItems);
     return null;
   };
+  const [date, setDate] = React.useState('');
   return (
     <CardContainer>
       <Box>
@@ -106,7 +107,8 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
           </Form.FormGroup>
           <Form.FormGroup mb="48px">
             <Form.Label>Due Date</Form.Label>
-            <Form.Input placeholder="Select date" />
+            {/* <Form.Input placeholder="Select date" /> */}
+            <Form.Date date={date} setDate={setDate} />
           </Form.FormGroup>
           <Form.FormGroup mb="20px">
             <Form.Label>Title</Form.Label>

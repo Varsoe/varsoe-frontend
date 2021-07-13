@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { Box, Flex } from 'rebass';
 import styled, { ThemeContext } from 'styled-components';
 import { Badge } from '../../../../components/atoms/Badge';
-import Button, { ButtonLink } from '../../../../components/atoms/Form/Button';
+import Button from '../../../../components/atoms/Form/Button';
 import Typography from '../../../../components/atoms/Typography';
 import useOnClickOutside from '../../../../hooks/ClickOutsideClose';
 import Avatar from '../../../../icons/Avatar';
