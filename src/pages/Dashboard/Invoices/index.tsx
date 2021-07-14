@@ -5,14 +5,15 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
 import styled, { ThemeContext } from 'styled-components';
 import { Badge } from '../../../components/atoms/Badge';
 import Button, { ButtonLink } from '../../../components/atoms/Form/Button';
-import Select from '../../../components/atoms/Form/Select';
 import Typography from '../../../components/atoms/Typography';
 import DropDown, { DropDownItem } from '../../../components/molecules/DropDown';
 import Table from '../../../components/molecules/Table';
 import { statusMapping } from '../../../constants';
 import { chartData } from '../../../data';
+import DropDownIcon from '../../../icons/DropDownIcon';
 import Filter from '../../../icons/Filter';
 import InvoiceIcon from '../../../icons/InvoiceIcon';
+import { BoxWithBorder } from '../styles';
 import InvoiceDetails from './components/InvoiceDetails';
 
 export interface DashboardIndexProps {}
@@ -23,7 +24,69 @@ const DashboardCard = styled.div<DashboardCardProps>`
   box-shadow: -1px -1px 8px rgba(8, 19, 45, 0.02), 1px 1px 8px rgba(8, 19, 45, 0.02);
   border-radius: 8px;
   padding: 48px 48px 24px 48px;
+  @media (max-width: 930px) {
+    box-shadow: none;
+    border: none;
+    padding-left: 0;
+    padding-right: 0;
+  }
 `;
+
+const StatBox = styled(Box)`
+  @media (max-width: 930px) {
+    display: none;
+  }
+`;
+
+const FilterButton = styled(Button)`
+  @media (max-width: 930px) {
+    font-size: 12px;
+  }
+`;
+
+const FilterGroup = styled(Flex)`
+  @media (max-width: 930px) {
+    flex: 1;
+    justify-content: space-between;
+  }
+`;
+
+const FilterContainer = styled(Box)`
+  @media (max-width: 930px) {
+    flex: 1;
+  }
+`;
+
+const DesktopTableView = styled(Box)`
+  @media (max-width: 930px) {
+    display: none;
+  }
+`;
+
+export const Mobile = styled(Box)`
+  display: none;
+  @media (max-width: 930px) {
+    display: block;
+  }
+`;
+const MobileTableGrid = styled(Box)`
+  display: none;
+  @media (max-width: 930px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 30px;
+    margin: 40px 0;
+  }
+`;
+
+const WelcomeSection = styled(Flex)`
+  @media (max-width: 930px) {
+    display: none;
+  }
+`;
+
+const windowWidth = window.innerWidth;
+const isMobile = windowWidth <= 930;
 
 const Chart = () => (
   <ResponsiveContainer width="100%" height={300}>
@@ -39,7 +102,7 @@ const Chart = () => (
         axisLine={false}
         tickLine={false}
         padding={{ left: 10 }}
-        tick={{ color: '#848996', fontSize: '14px' }}
+        tick={{ color: '#848996', fontSize: isMobile ? '10px' : '14px' }}
       />
       <Tooltip />
       <Area type="monotone" dataKey="uv" stroke="#0555FF" fillOpacity={1} fill="url(#colorUv)" />
@@ -84,10 +147,14 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
   const history = useHistory();
   const theme = React.useContext(ThemeContext);
   const [showInvoice, setShowInvoice] = React.useState(false);
+  const [activeAmount, setActiveAmount] = React.useState('amountDue');
+  const [amountToShow, setAmountToShow] = React.useState(false);
+  const [tableDropDown, setTableDropDown] = React.useState<{ [key: string]: boolean }>({});
+
   return (
     <Box pt="40px" pb="100px">
       <InvoiceDetails show={showInvoice} setShowInvoice={setShowInvoice} />
-      <Flex alignItems="center" justifyContent="space-between">
+      <WelcomeSection alignItems="center" justifyContent="space-between">
         <Typography.Heading type="h5">Welcome Damola,</Typography.Heading>
         <Button
           variant="primary"
@@ -98,12 +165,110 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
         >
           Create Invoice
         </Button>
-      </Flex>
+      </WelcomeSection>
+      <Mobile>
+        <DropDown
+          isOpen={amountToShow}
+          setIsOpen={setAmountToShow}
+          width="200px"
+          right={false}
+          header={
+            <Flex alignItems="center">
+              <Typography.Paragraph textTransform="capitalize" color="primary">
+                {activeAmount.replace('-', ' ')}
+              </Typography.Paragraph>
+              <Box ml="2">
+                <svg
+                  width="8"
+                  height="8"
+                  viewBox="0 0 12 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style={{ transform: 'scale(0.5)' }}
+                >
+                  <path
+                    opacity="0.64"
+                    d="M5.29289 6.29289L1.70711 2.70711C1.07714 2.07714 1.52331 1 2.41421 1H9.58579C10.4767 1 10.9229 2.07714 10.2929 2.70711L6.70711 6.29289C6.31658 6.68342 5.68342 6.68342 5.29289 6.29289Z"
+                    fill="#08132D"
+                    stroke="#08132D"
+                  />
+                </svg>
+              </Box>
+            </Flex>
+          }
+        >
+          <Box>
+            <DropDownItem>
+              <Button
+                variant="transparent"
+                color={theme.colors.black[400]}
+                onClick={() => {
+                  setAmountToShow(false);
+                  setActiveAmount('amount-due');
+                }}
+              >
+                Amount Due
+              </Button>
+            </DropDownItem>
+            <DropDownItem>
+              <Button
+                variant="transparent"
+                color={theme.colors.black[400]}
+                onClick={() => {
+                  setActiveAmount('amount-received');
+                }}
+              >
+                Amount Received
+              </Button>
+            </DropDownItem>
+            <DropDownItem>
+              <Button
+                variant="transparent"
+                color={theme.colors.black[400]}
+                onClick={() => {
+                  setActiveAmount('total-invoices');
+                }}
+              >
+                Total Invoices
+              </Button>
+            </DropDownItem>
+            <DropDownItem>
+              <Button
+                variant="transparent"
+                color={theme.colors.black[400]}
+                onClick={() => {
+                  setActiveAmount('invoices-due');
+                }}
+              >
+                Invoices Due
+              </Button>
+            </DropDownItem>
+          </Box>
+        </DropDown>
+        <Box marginRight="20px" marginBottom="20px">
+          <Flex alignItems="center">
+            <Typography.Heading type="h5" mr="5px">
+              $45,000
+            </Typography.Heading>
+            <Typography.Paragraph fontSize={1} color={theme.colors.statusGreen}>
+              +32%
+            </Typography.Paragraph>
+          </Flex>
+        </Box>
+        <Button
+          variant="primary"
+          onClick={() => {
+            history.push('/invoices/create');
+          }}
+        >
+          Create Invoice
+        </Button>
+      </Mobile>
       <Box mt="46px">
         <DashboardCard>
           <Flex flexDirection="column" justifyContent="space-between" flex="1">
-            <Flex height="100px" justifyContent="space-between">
-              <Box>
+            <Flex height="100px" justifyContent="space-between" flexWrap="wrap">
+              <StatBox marginRight="20px" marginBottom="20px">
                 <Typography.Paragraph fontSize={1}>Amount Dues</Typography.Paragraph>
                 <Flex alignItems="center">
                   <Typography.Heading type="h5" mr="5px">
@@ -113,8 +278,8 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                     +32%
                   </Typography.Paragraph>
                 </Flex>
-              </Box>
-              <Box>
+              </StatBox>
+              <StatBox marginRight="20px" marginBottom="20px">
                 <Typography.Paragraph fontSize={1}>Amount Dues</Typography.Paragraph>
                 <Flex alignItems="center">
                   <Typography.Heading type="h5" mr="5px">
@@ -124,8 +289,8 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                     -25%
                   </Typography.Paragraph>
                 </Flex>
-              </Box>
-              <Box>
+              </StatBox>
+              <StatBox marginRight="20px" marginBottom="20px">
                 <Typography.Paragraph fontSize={1}>Invoices Due</Typography.Paragraph>
                 <Flex alignItems="center">
                   <Typography.Heading type="h5" mr="5px">
@@ -135,8 +300,8 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                     +32%
                   </Typography.Paragraph>
                 </Flex>
-              </Box>
-              <Box>
+              </StatBox>
+              <StatBox marginRight="20px" marginBottom="20px">
                 <Typography.Paragraph fontSize={1}>Amount Dues</Typography.Paragraph>
                 <Flex alignItems="center">
                   <Typography.Heading type="h5" mr="5px">
@@ -146,29 +311,44 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                     +32%
                   </Typography.Paragraph>
                 </Flex>
-              </Box>
-              <Box>
-                <Flex justifyContent="space-between" flex="0.4" alignItems="center" height="50%">
-                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+              </StatBox>
+              <FilterContainer>
+                <FilterGroup justifyContent="space-between" alignItems="center" height="50%">
+                  <FilterButton variant="transparent" color={theme.colors.black[600]} fontSize={theme.fontSizes[1]}>
                     1 month
-                  </Button>
-                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                  </FilterButton>
+                  <FilterButton
+                    variant="transparent"
+                    ml="20px"
+                    color={theme.colors.black[600]}
+                    fontSize={theme.fontSizes[1]}
+                  >
                     6 month
-                  </Button>
-                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                  </FilterButton>
+                  <FilterButton
+                    variant="transparent"
+                    ml="20px"
+                    color={theme.colors.black[600]}
+                    fontSize={theme.fontSizes[1]}
+                  >
                     1 year
-                  </Button>
-                  <Button variant="transparent" ml="20px" color={theme.colors.black[600]}>
+                  </FilterButton>
+                  <FilterButton
+                    variant="transparent"
+                    ml="20px"
+                    color={theme.colors.black[600]}
+                    fontSize={theme.fontSizes[1]}
+                  >
                     Custom
-                  </Button>
-                </Flex>
-              </Box>
+                  </FilterButton>
+                </FilterGroup>
+              </FilterContainer>
             </Flex>
             <Chart />
           </Flex>
         </DashboardCard>
       </Box>
-      <Box mt="64px">
+      <DesktopTableView mt="64px">
         <Flex alignItems="center">
           <Typography.Heading type="h5" mr="15px">
             Invoice
@@ -204,7 +384,13 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                       View
                     </Button>
                     <Box>
-                      <DropDown width="200px">
+                      <DropDown
+                        width="200px"
+                        isOpen={!!tableDropDown[id]}
+                        setIsOpen={(s) => {
+                          setTableDropDown({ ...tableDropDown, [id]: s });
+                        }}
+                      >
                         <Box>
                           <DropDownItem>
                             <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
@@ -240,7 +426,38 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
             ))}
           </Table.TBody>
         </Table.Table>
-      </Box>
+      </DesktopTableView>
+      <Mobile>
+        <Flex alignItems="center" justifyContent="space-between">
+          <Typography.Heading type="h5" mr="15px">
+            All Invoices
+          </Typography.Heading>
+          <Button variant="transparent">Filter</Button>
+        </Flex>
+        <MobileTableGrid>
+          {tableData.map(({ id, status, date, name, project, amount }) => (
+            <BoxWithBorder
+              py="12px"
+              px="20px"
+              border="1px solid #F5F5F7"
+              borderRadius="8px"
+              key={id}
+              onClick={() => history.push('/invoices/view')}
+            >
+              <Flex justifyContent="space-between" alignItems="center">
+                <Typography.Paragraph>{name}</Typography.Paragraph>
+                <Typography.Paragraph color={theme.colors.green[600]}>{amount}</Typography.Paragraph>
+              </Flex>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Typography.Paragraph color={theme.colors.black[400]}>{date}</Typography.Paragraph>
+                <Typography.Paragraph color={theme.colors.statusGreen}>
+                  <Badge type={statusMapping[status].color}>{statusMapping[status].text}</Badge>
+                </Typography.Paragraph>
+              </Flex>
+            </BoxWithBorder>
+          ))}
+        </MobileTableGrid>
+      </Mobile>
     </Box>
   );
 };

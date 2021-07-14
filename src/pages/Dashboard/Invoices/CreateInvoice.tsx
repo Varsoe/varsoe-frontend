@@ -9,7 +9,7 @@ import BackIcon from '../../../icons/BackIcon';
 import SaveIcon from '../../../icons/SaveIcon';
 import SendIcon from '../../../icons/SendIcon';
 import Form from '../../../components/atoms/Form';
-import { PaymentLink } from './styled';
+import { PageContainer, PaymentLink } from './styled';
 import CopyIcon from '../../../icons/CopyIcon';
 import InvoiceForm from './components/InvoiceForm';
 import Switch from '../../../components/atoms/Form/Switch';
@@ -19,14 +19,6 @@ import FollowUpInvoiceModal from './components/FollowUpInvoiceModal';
 import DeleteInvoice from './components/DeleteInvoice';
 
 export interface CreateInvoiceProps {}
-
-const PageContainer = styled(Box)`
-  display: grid;
-  grid-template-columns: 400px 1fr;
-  margin-top: 40px;
-  grid-gap: 30px 70px;
-  align-items: center;
-`;
 
 const CreateInvoice: React.FC<CreateInvoiceProps> = () => {
   const theme = useTheme();
@@ -85,7 +77,7 @@ const CreateInvoice: React.FC<CreateInvoiceProps> = () => {
 
   return (
     <>
-      <AddCustomerModal />
+      {/* <AddCustomerModal /> */}
       {/* <SendInvoiceModal /> */}
       {/* <FollowUpInvoiceModal /> */}
       {/* <DeleteInvoice /> */}
@@ -119,7 +111,7 @@ const CreateInvoice: React.FC<CreateInvoiceProps> = () => {
                 <Form.SelectAdd options={options} addItemText="Add new project" />
               </Form.FormGroup>
               <Flex mb="8px" justifyContent="space-between" alignItems="center">
-                <Form.Label>PaymentLink</Form.Label>
+                <Form.Label>Payment Link</Form.Label>
                 <Switch checked={on} onChange={handleChange} />
               </Flex>
               {on && (

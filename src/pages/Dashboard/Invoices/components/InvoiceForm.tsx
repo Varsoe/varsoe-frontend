@@ -96,6 +96,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
     return null;
   };
   const [date, setDate] = React.useState('');
+  const [currencyDropDown, setCurrencyDropdown] = React.useState(false);
   return (
     <CardContainer>
       <Box>
@@ -121,6 +122,8 @@ const InvoiceForm: React.FC<InvoiceFormProps> = () => {
             <DropDown
               iconColor={theme.colors.blue[600]}
               width="70px"
+              isOpen={currencyDropDown}
+              setIsOpen={setCurrencyDropdown}
               header={<CurrencyChangeButton>Change currency</CurrencyChangeButton>}
             >
               <Box>

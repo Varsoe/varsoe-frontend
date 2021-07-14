@@ -28,3 +28,16 @@ export const InvoiceItemsContainer = styled(Box)`
   padding: 16px 20px;
   margin-top: 40px;
 `;
+
+export const PageContainer = styled(Box)`
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  margin-top: 40px;
+  grid-gap: 30px 70px;
+  @media (max-width: 1140px) {
+    grid-template-columns: 1fr;
+  }
+  @media (max-width: 930px) {
+    display: none;
+  }
+`;

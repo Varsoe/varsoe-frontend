@@ -10,6 +10,7 @@ type TextProps = {
   mb?: string;
   mt?: string;
   textAlign?: 'left' | 'right' | 'justify' | 'center';
+  textTransform?: 'uppercase' | 'lowercase' | 'capitalize';
 };
 
 // type HeadingProps = TextProps & {
@@ -49,6 +50,7 @@ const Paragraph = styled.p<TextProps>`
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : props.theme.fontWeights.regular)};
   margin: 0;
   text-align: ${(props) => (props.textAlign ? props.textAlign : 'left')};
+  text-transform: ${(props) => props.textTransform};
   ${({ mb }) =>
     mb &&
     css`
@@ -68,7 +70,7 @@ const Paragraph = styled.p<TextProps>`
     ml &&
     css`
       margin-left: ${ml};
-    `}
+    `};
 `;
 
 const HeadingTag = ({ type, children, ...props }: { children: React.ReactNode; type: keyof typeof tagMapping }) =>

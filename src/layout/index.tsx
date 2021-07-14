@@ -7,7 +7,7 @@ export interface LayoutProps {}
 const Container = styled.div`
   max-width: 1350px;
   margin: 0 auto;
-  padding: 0 1em;
+  padding: 0 20px;
   position: relative;
   z-index: 3;
 `;
@@ -23,6 +23,10 @@ export const Bg1 = styled(Box)`
   transform: rotate(-180deg);
   width: 70vw;
   height: 428px;
+
+  @media (max-width: 930px) {
+    background-color: ${(props) => props.theme.colors.white};
+  }
 `;
 export const Bg2 = styled(Box)`
   position: absolute;
@@ -33,6 +37,9 @@ export const Bg2 = styled(Box)`
   filter: blur(800px);
   width: 30vw;
   height: 30vw;
+  @media (max-width: 930px) {
+    background-color: ${(props) => props.theme.colors.white};
+  }
 `;
 const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) => (
   <Box minHeight="100vh">

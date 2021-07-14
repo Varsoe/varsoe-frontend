@@ -2,6 +2,10 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Text, Flex, Box } from 'rebass';
 import { NavLink } from 'react-router-dom';
+import MobileHambuger from '../icons/MobileHambuger';
+import Typography from '../components/atoms/Typography';
+import Button from '../components/atoms/Form/Button';
+import { Mobile } from '../pages/Dashboard/Invoices';
 
 export interface NavProps {}
 const NavContainer = styled.div`
@@ -11,11 +15,18 @@ const NavContainer = styled.div`
   align-items: center;
   position: relative;
   z-index: 0;
+  @media (max-width: 9030px) {
+    justify-content: space-between;
+  }
 `;
 const NavGroup = styled.nav`
   display: flex;
-  margin: 0 auto;
+  margin: 0;
+  margin-left: auto;
   align-items: center;
+  @media (max-width: 930px) {
+    display: none;
+  }
 `;
 const NavLinks = styled(NavLink)`
   font-size: 1.6rem;
@@ -40,6 +51,10 @@ const NavLinks = styled(NavLink)`
 const Logo = styled.img`
   height: 20px;
   object-fit: contain;
+  display: inline-block;
+  @media (max-width: 903px) {
+    display: none;
+  }
 `;
 const UserAvatar = styled.div`
   width: 32px;
@@ -57,6 +72,17 @@ const UserAvatar = styled.div`
 const Nav: React.FC<NavProps> = () => (
   <NavContainer>
     <Logo src="/logo.png" />
+    {/* <Button variant="transparent"> */}
+    <Mobile>
+      <MobileHambuger />
+    </Mobile>
+    {/* </Button> */}
+    <Mobile>
+      <Typography.Heading type="h5">Invoices</Typography.Heading>
+    </Mobile>
+    <Mobile>
+      <UserAvatar>DA</UserAvatar>
+    </Mobile>
     <NavGroup>
       <NavLinks to="/" activeClassName="active" exact>
         Dashboard
@@ -70,23 +96,23 @@ const Nav: React.FC<NavProps> = () => (
       <NavLinks to="/customers" activeClassName="active">
         Customers
       </NavLinks>
+      <Flex alignItems="center" ml={2} marginLeft="50px">
+        <UserAvatar>DA</UserAvatar>
+        <Text fontSize={[2]} color="primary" ml="2">
+          Damola Adegoke
+        </Text>
+        <Box ml="2">
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              opacity="0.64"
+              d="M5.29289 6.29289L1.70711 2.70711C1.07714 2.07714 1.52331 1 2.41421 1H9.58579C10.4767 1 10.9229 2.07714 10.2929 2.70711L6.70711 6.29289C6.31658 6.68342 5.68342 6.68342 5.29289 6.29289Z"
+              fill="#08132D"
+              stroke="#08132D"
+            />
+          </svg>
+        </Box>
+      </Flex>
     </NavGroup>
-    <Flex alignItems="center" ml={2}>
-      <UserAvatar>DA</UserAvatar>
-      <Text fontSize={[2]} color="primary" ml="2">
-        Damola Adegoke
-      </Text>
-      <Box ml="2">
-        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            opacity="0.64"
-            d="M5.29289 6.29289L1.70711 2.70711C1.07714 2.07714 1.52331 1 2.41421 1H9.58579C10.4767 1 10.9229 2.07714 10.2929 2.70711L6.70711 6.29289C6.31658 6.68342 5.68342 6.68342 5.29289 6.29289Z"
-            fill="#08132D"
-            stroke="#08132D"
-          />
-        </svg>
-      </Box>
-    </Flex>
   </NavContainer>
 );
 

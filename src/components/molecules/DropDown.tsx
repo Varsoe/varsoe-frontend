@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 import { Box } from 'rebass';
 import styled from 'styled-components';
+import useOnClickOutside from '../../hooks/ClickOutsideClose';
 import DropDownIcon from '../../icons/DropDownIcon';
 import TableDropDownIcon from '../../icons/TableDropDown';
 import Button from '../atoms/Form/Button';
@@ -12,7 +13,15 @@ export interface DropDownProps {
   hideIconCircle?: boolean;
   hideIcon?: boolean;
   header?: React.ReactNode;
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  right?: boolean;
 }
+
+interface DropDownBody {
+  right: boolean;
+}
+
 const DropDownBody = styled(motion(Box))`
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 2px 2px 4px rgba(8, 19, 45, 0.04), -2px -2px 8px rgba(8, 19, 45, 0.04);
@@ -21,7 +30,6 @@ const DropDownBody = styled(motion(Box))`
   padding: 5px 0px;
   min-height: 100px;
   position: absolute;
-  right: 0;
   text-align: left;
   z-index: 3;
 `;
@@ -38,23 +46,25 @@ export const DropDownItem = styled(Box)`
   }
 `;
 
-const DropDown: React.FC<DropDownProps> = ({ children, iconColor, width, hideIconCircle, header }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropDownRef = useRef<HTMLDivElement>();
-
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (dropDownRef.current && !dropDownRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('click', handleClick);
-    return () => {
-      document.removeEventListener('click', handleClick);
-    };
-  });
+const DropDown: React.FC<DropDownProps> = ({
+  children,
+  iconColor,
+  width,
+  hideIconCircle,
+  header,
+  isOpen,
+  setIsOpen,
+  right = true,
+}) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const handleClickOutside = () => {
+    setIsOpen(false);
+  };
+  useOnClickOutside(ref, handleClickOutside);
+  const key = right ? 'right' : 'left';
+  console.log({ isOpen });
   return (
-    <DropDownContainer ref={dropDownRef}>
+    <DropDownContainer ref={ref}>
       <Button variant="transparent" onClick={() => setIsOpen(true)}>
         {header ? (
           <>{header}</>
@@ -64,10 +74,14 @@ const DropDown: React.FC<DropDownProps> = ({ children, iconColor, width, hideIco
         <AnimatePresence>
           {isOpen && (
             <DropDownBody
+              style={{ [key]: 0 }}
               width={width}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              animate={{
+                opacity: 1,
+                display: 'block',
+              }}
+              // exit={{ opacity: 0 }}
               transition={{
                 duration: 0.2,
                 easings: 'easeInOut',
@@ -81,5 +95,4 @@ const DropDown: React.FC<DropDownProps> = ({ children, iconColor, width, hideIco
     </DropDownContainer>
   );
 };
-
 export default DropDown;
