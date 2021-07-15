@@ -38,7 +38,6 @@ const ButtonStyle = styled.button<ButtonProps>`
   color: ${(props) => props.color || variantsToColorMap[props.variant].color};
   border: ${(props) => variantsToColorMap[props.variant].border};
   border-radius: 8px;
-  /* font-size: 1.6rem; */
   font-size: ${(props) => props.fontSize};
   cursor: pointer;
   box-shadow: ${(props) => (props.shadow ? '4px 4px 8px rgba(90, 98, 115, 0.16);' : 'none')};

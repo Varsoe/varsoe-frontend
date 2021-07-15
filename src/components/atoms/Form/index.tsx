@@ -24,7 +24,10 @@ const Input = styled.input<InputProps>`
     color: ${(props) => props.theme.colors.black[200]};
   }
   &::focus {
-    border: ${(props) => `1px solid ${props.theme.colors.blue[600]}`};
+    border-radius: 8px;
+    outline: none;
+    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.blue[600]};
+    /* border-color: ${(props) => props.theme.colors.blue[600]}; */
   }
 `;
 const Form = styled.form``;

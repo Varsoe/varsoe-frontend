@@ -9,6 +9,7 @@ import Customers from '../pages/Dashboard/Customers';
 import ViewInvoice from '../pages/Dashboard/Invoices/ViewInvoice';
 import CreateInvoice from '../pages/Dashboard/Invoices/CreateInvoice';
 import SignUp from '../pages/Auth/SignUp';
+import ForgotPassword from '../pages/Auth/ForgotPassword';
 
 const Dashboard = React.lazy(() => import('../pages/Dashboard/Home'));
 const Login = React.lazy(() => import('../pages/Auth/Login'));
@@ -21,6 +22,9 @@ const RouterComponent: React.FC = () => (
         </Route>
         <Route path="/signup" exact>
           <SignUp />
+        </Route>
+        <Route path="/forgot-password" exact>
+          <ForgotPassword />
         </Route>
         <DashboardRoutes path="/" exact>
           <Dashboard />

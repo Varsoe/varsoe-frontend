@@ -47,8 +47,14 @@ const Login: React.FC<LoginProps> = () => {
               <Form.Input placeholder="Password" type="password" />
             </Form.FormGroup>
             <Flex alignItems="center" pb="40px">
-              <Typography.Paragraph color={theme.colors.black[400]}>Forgot</Typography.Paragraph>
-              <Button variant="transparent" fontSize={theme.fontSizes[2]} ml="5px" mr="5px">
+              <Typography.Paragraph color={theme.colors.black[400]}>Forgot Password</Typography.Paragraph>
+              <Button
+                variant="transparent"
+                fontSize={theme.fontSizes[2]}
+                ml="5px"
+                mr="5px"
+                onClick={() => history.push('/forgot-password')}
+              >
                 Reset Password
               </Button>
             </Flex>
