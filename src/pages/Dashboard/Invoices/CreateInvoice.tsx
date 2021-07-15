@@ -24,6 +24,7 @@ const CreateInvoice: React.FC<CreateInvoiceProps> = () => {
   const theme = useTheme();
   const history = useHistory();
   const [on, setOn] = useState(false);
+  const [showCustomerModal, setShowCustomerModal] = React.useState();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;

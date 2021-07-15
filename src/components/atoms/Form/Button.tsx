@@ -103,7 +103,7 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   <ButtonStyle variant={variant} shadow={shadow} {...rest}>
     <Flex alignItems="center">
       {Icon}
-      <Box ml={Icon ? '5px' : '0px'} width="100%">
+      <Box ml={Icon ? '5px' : '0px'} width="100%" fontSize={fontSize}>
         {children}
       </Box>
     </Flex>

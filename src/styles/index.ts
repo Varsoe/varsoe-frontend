@@ -23,8 +23,9 @@ body {
   overflow-x: hidden;
 }
 
-button {
+button, input, select {
   font-family: "Wigrum";
+  text-transform: capitalize;
 }
 
 .DayPickerInput {
