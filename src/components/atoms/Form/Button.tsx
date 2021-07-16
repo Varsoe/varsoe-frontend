@@ -31,7 +31,7 @@ const variantsToColorMap = {
   },
 };
 
-const ButtonStyle = styled.button<ButtonProps>`
+const ButtonStyle = styled.button<ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>>`
   cursor: pointer;
   padding: ${(props) => (props.variant === 'transparent' ? '0' : '12px 16px')};
   background-color: ${(props) => variantsToColorMap[props.variant].bg};
@@ -76,7 +76,7 @@ const ButtonStyle = styled.button<ButtonProps>`
 `;
 
 type Variants = 'primary' | 'transparent' | 'outline' | 'danger';
-export interface ButtonProps {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant: Variants;
   Icon?: React.ReactNode;
   children: React.ReactNode;

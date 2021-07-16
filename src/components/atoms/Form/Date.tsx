@@ -10,9 +10,10 @@ import { DateUtils } from 'react-day-picker';
 export interface DateProps {
   date: string;
   setDate: React.Dispatch<React.SetStateAction<string>>;
+  placeholder?: string;
 }
 
-const DateInput: React.FC<DateProps> = ({ date, setDate }) => {
+const DateInput: React.FC<DateProps> = ({ placeholder, date, setDate }) => {
   const FORMAT = 'DD/MM/YY';
 
   const handleDayChange = () => {
@@ -20,7 +21,7 @@ const DateInput: React.FC<DateProps> = ({ date, setDate }) => {
   };
   return (
     <Box>
-      <DayPickerInput format={FORMAT} onDayChange={handleDayChange} placeholder="DD/MM/YYYY" />
+      <DayPickerInput format={FORMAT} onDayChange={handleDayChange} placeholder={placeholder || 'DD/MM/YYYY'} />
     </Box>
   );
 };

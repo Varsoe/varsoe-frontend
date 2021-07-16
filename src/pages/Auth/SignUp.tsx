@@ -73,9 +73,10 @@ export const Content = styled(Box)`
   z-index: 3;
 `;
 
-const InputGroup = styled(Flex)`
+export const InputGroup = styled(Flex)`
   & > * {
     margin-right: 16px;
+    flex: 1;
   }
   & > *:last-child {
     margin-right: 0;
@@ -175,7 +176,8 @@ const SignUp: React.FC<SignUpProps> = () => {
         <RegisterBg
           style={{
             position: 'absolute',
-            left: '60px',
+            left: '0px',
+            marginLeft: '60px',
             width: '100%',
             right: '-50px',
             top: '50%',

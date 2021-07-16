@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router';
 import { Box, Flex } from 'rebass';
+import styled from 'styled-components';
 import Form from '../../components/atoms/Form';
 import Button from '../../components/atoms/Form/Button';
 import Typography from '../../components/atoms/Typography';
@@ -11,7 +12,11 @@ import { BoxWithBorder, FlexWithBorder } from '../Dashboard/styles';
 import { AuthButtons, Content, Grid, Logo, YellowBg } from './SignUp';
 
 export interface LoginProps {}
-
+const Bg = styled(Flex)`
+  @media (max-width: 1020px) {
+    display: none;
+  }
+`;
 const Login: React.FC<LoginProps> = () => {
   const history = useHistory();
   return (
@@ -62,7 +67,14 @@ const Login: React.FC<LoginProps> = () => {
           <Button variant="primary">Login</Button>
         </Content>
       </Box>
-      <Flex overflowY="hidden" height="100vh" backgroundColor={theme.colors.blue[100]} alignItems="center" pl="80px">
+      <Bg
+        overflowY="hidden"
+        height="100vh"
+        backgroundColor={theme.colors.blue[100]}
+        alignItems="center"
+        pl="80px"
+        pr="20px"
+      >
         <Box maxWidth="500px" mt="-50px">
           <Flex mb="40px">
             <FlexWithBorder
@@ -137,7 +149,7 @@ const Login: React.FC<LoginProps> = () => {
             </Box>
           </Flex>
         </Box>
-      </Flex>
+      </Bg>
     </Grid>
   );
 };

@@ -6,6 +6,7 @@ import MobileHambuger from '../icons/MobileHambuger';
 import Typography from '../components/atoms/Typography';
 import Button from '../components/atoms/Form/Button';
 import { Mobile } from '../pages/Dashboard/Invoices';
+import { BoxWithBorder } from '../pages/Dashboard/styles';
 
 export interface NavProps {}
 const NavContainer = styled.div`
@@ -56,11 +57,11 @@ const Logo = styled.img`
     display: none;
   }
 `;
-const UserAvatar = styled.div`
-  width: 32px;
-  height: 32px;
-  background-color: #fce9c4;
-  border: 2px solid #f7c86c;
+export const UserAvatar = styled(BoxWithBorder)`
+  /* width: 32px;
+  height: 32px; */
+  /* background-color: #fce9c4; */
+  /* border: 2px solid #f7c86c; */
   color: #f5bd4f;
   border-radius: 50%;
   font-size: 1.4rem;
@@ -81,7 +82,9 @@ const Nav: React.FC<NavProps> = () => (
       <Typography.Heading type="h5">Invoices</Typography.Heading>
     </Mobile>
     <Mobile>
-      <UserAvatar>DA</UserAvatar>
+      <UserAvatar width="32px" height="32px" backgroundColor="#fce9c4">
+        DA
+      </UserAvatar>
     </Mobile>
     <NavGroup>
       <NavLinks to="/" activeClassName="active" exact>

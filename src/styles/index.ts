@@ -32,6 +32,7 @@ button, input, select {
   font-family: 'Wigrum';
   display: block;
   font-size: 14px;
+  display:  block;
   
 }
 .DayPickerInput input {

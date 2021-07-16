@@ -69,10 +69,10 @@ const ButtonWrapper = styled(Flex)`
   position: relative;
 `;
 
-const ItemsContainer = styled(motion(Box))``;
+export const ItemsContainer = styled(motion(Box))``;
 
 const border = '1px solid #F5F5F7';
-const variants = {
+export const dropDownVariants = {
   open: {
     opacity: 1,
     height: 'auto',
@@ -183,7 +183,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
               initial={itemOpened ? 'open' : 'collapsed'}
               animate={itemOpened ? 'open' : 'collapsed'}
               inherit={false}
-              variants={variants}
+              variants={dropDownVariants}
               transition={{
                 type: 'tween',
                 duration: 0.35,

@@ -15,9 +15,16 @@ import { InvoiceItemsContainer, PageContainer, PaymentLink } from './styled';
 
 export interface ViewInvoiceProps {}
 
-const MobileContainer = styled(Box)`
+export const MobileContainer = styled(Box)`
   @media (max-width: 930px) {
     display: block;
+  }
+`;
+
+export const DesktopContainer = styled(Box)`
+  display: block;
+  @media (max-width: 930px) {
+    display: none;
   }
 `;
 const ViewInvoice: React.FC<ViewInvoiceProps> = () => {
