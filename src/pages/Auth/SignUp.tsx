@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router';
 import Typography from '../../components/atoms/Typography';
 import RegisterBg from '../../icons/RegisterBg';
-import Button from '../../components/atoms/Form/Button';
+import Button, { ButtonLink } from '../../components/atoms/Form/Button';
 import Google from '../../icons/Google';
 import Apple from '../../icons/Apple';
 import { BoxWithBorder } from '../Dashboard/styles';
@@ -20,7 +20,7 @@ export const Logo = styled.img`
   object-fit: contain;
   display: inline-block;
 `;
-export const Grid = styled(Box)`
+const Grid = styled(Box)`
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100vh;
@@ -136,16 +136,16 @@ const SignUp: React.FC<SignUpProps> = () => {
             <Form.FormGroup mb="40px">
               <Form.Input placeholder="Password" type="password" />
             </Form.FormGroup>
-            <Flex alignItems="center" py="20px">
+            <Flex alignItems="center" py="20px" flexWrap="wrap">
               <Typography.Paragraph color={theme.colors.black[400]}>I accept the</Typography.Paragraph>
-              <Button variant="transparent" fontSize={theme.fontSizes[2]} ml="5px" mr="5px">
+              <ButtonLink variant="transparent" fontSize={theme.fontSizes[2]} ml="2px" mr="2px" to="/">
                 Terms of Use
-              </Button>{' '}
+              </ButtonLink>{' '}
               <Typography.Paragraph color={theme.colors.black[400]}>and</Typography.Paragraph>
-              <Button variant="transparent" fontSize={theme.fontSizes[2]} mr="5px" ml="5px">
+              <ButtonLink to="/" variant="transparent" fontSize={theme.fontSizes[2]} mr="2px" ml="2px">
                 {' '}
                 Privacy Policy
-              </Button>
+              </ButtonLink>
             </Flex>
           </Box>
           <Button variant="primary">Create Account</Button>

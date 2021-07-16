@@ -115,6 +115,27 @@ const LinkStyle = styled(Link)<ButtonProps>`
   text-decoration: none;
   display: block;
   font-weight: ${({ theme: t }) => t.fontWeights.medium};
+  font-size: ${(props) => props.fontSize};
+  ${({ mb }) =>
+    mb &&
+    css`
+      margin-bottom: ${mb};
+    `}
+  ${({ mt }) =>
+    mt &&
+    css`
+      margin-top: ${mt};
+    `}
+    ${({ mr }) =>
+    mr &&
+    css`
+      margin-right: ${mr};
+    `}
+    ${({ ml }) =>
+    ml &&
+    css`
+      margin-left: ${ml};
+    `}
 `;
 export const ButtonLink: React.FC<React.PropsWithChildren<ButtonLinkProps>> = ({
   variant = 'transparent',

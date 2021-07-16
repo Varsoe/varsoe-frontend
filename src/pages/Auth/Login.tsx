@@ -9,12 +9,22 @@ import Apple from '../../icons/Apple';
 import Google from '../../icons/Google';
 import { theme } from '../../theme/theme';
 import { BoxWithBorder, FlexWithBorder } from '../Dashboard/styles';
-import { AuthButtons, Content, Grid, Logo, YellowBg } from './SignUp';
+import { AuthButtons, Content, Logo, YellowBg } from './SignUp';
 
 export interface LoginProps {}
 const Bg = styled(Flex)`
   @media (max-width: 1020px) {
     display: none;
+  }
+`;
+
+const Grid = styled(Box)`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  overflow-x: hidden;
+  @media (max-width: 1020px) {
+    grid-template-columns: 1fr;
   }
 `;
 const Login: React.FC<LoginProps> = () => {
