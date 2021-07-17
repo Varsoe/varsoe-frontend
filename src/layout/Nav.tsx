@@ -99,7 +99,7 @@ const MobileNavGroupBg = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
-  width: 85%;
+  width: 100%;
   height: 100%;
   z-index: 500;
   @media (max-width: 930px) {
@@ -188,7 +188,7 @@ const Nav: React.FC<NavProps> = () => {
             <span>Invoices</span>
             <CaretRight />
           </NavLinksMobile>
-          <NavLinksMobile to="/payments" activeClassName="active" exact onClick={() => setShowMobileNav(false)}>
+          <NavLinksMobile to="/payment" activeClassName="active" exact onClick={() => setShowMobileNav(false)}>
             <span>Payment</span>
             <CaretRight />
           </NavLinksMobile>

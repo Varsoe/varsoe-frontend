@@ -10,6 +10,7 @@ const Container = styled.div`
   padding: 0 20px;
   position: relative;
   z-index: 3;
+  overflow-x: hidden;
 `;
 export const Bg1 = styled(Box)`
   position: absolute;
@@ -26,6 +27,7 @@ export const Bg1 = styled(Box)`
 
   @media (max-width: 930px) {
     background-color: ${(props) => props.theme.colors.white};
+    display: none;
   }
 `;
 export const Bg2 = styled(Box)`
@@ -39,6 +41,7 @@ export const Bg2 = styled(Box)`
   height: 30vw;
   @media (max-width: 930px) {
     background-color: ${(props) => props.theme.colors.white};
+    display: none;
   }
 `;
 const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) => (
@@ -47,6 +50,7 @@ const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) =>
     <Bg2 />
     <Container>
       <Nav />
+
       <main>{children}</main>
     </Container>
   </Box>
