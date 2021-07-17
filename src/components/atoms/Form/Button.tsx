@@ -68,7 +68,12 @@ const ButtonStyle = styled.button<ButtonProps & React.ButtonHTMLAttributes<HTMLB
     css`
       margin-left: ${ml};
     `}
-    
+  &.hamburger {
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
   svg {
     width: 24px;
     height: 24px;

@@ -130,7 +130,7 @@ const Nav: React.FC<NavProps> = () => {
     <NavContainer>
       <Logo src="/logo.png" />
       <Mobile>
-        <Button variant="transparent" onClick={() => setShowMobileNav(true)}>
+        <Button variant="transparent" onClick={() => setShowMobileNav(true)} className="hamburger">
           <MobileHambuger />
         </Button>
       </Mobile>
