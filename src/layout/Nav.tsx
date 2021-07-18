@@ -10,6 +10,7 @@ import { Mobile } from '../pages/Dashboard/Invoices';
 import { BoxWithBorder } from '../pages/Dashboard/styles';
 import CaretRight from '../icons/CaretRight';
 import CloseModalIcon from '../icons/CloseModalIcon';
+import { theme } from '../theme/theme';
 
 export interface NavProps {}
 const NavContainer = styled.div`
@@ -159,7 +160,15 @@ const Nav: React.FC<NavProps> = () => {
           Customers
         </NavLinks>
         <Flex alignItems="center" ml={2} marginLeft="50px">
-          <UserAvatar>DA</UserAvatar>
+          <UserAvatar
+            frameBorder="1px solid #FDF2DC"
+            backgroundColor={theme.colors.yellow[100]}
+            color={theme.colors.yellow[600]}
+            width="32px"
+            height="32px"
+          >
+            DA
+          </UserAvatar>
           <Text fontSize={[2]} color="primary" ml="2">
             Damola Adegoke
           </Text>
