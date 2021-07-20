@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { Box, Flex } from 'rebass';
 import styled from 'styled-components';
 import Form from '../../components/atoms/Form';
-import Button from '../../components/atoms/Form/Button';
+import Button, { ButtonLink } from '../../components/atoms/Form/Button';
 import Typography from '../../components/atoms/Typography';
 import Apple from '../../icons/Apple';
 import Google from '../../icons/Google';
@@ -35,13 +35,15 @@ const Login: React.FC<LoginProps> = () => {
         <YellowBg />
         <Content pt="28px" maxWidth="600px" margin="0 auto" width="100%" px="20px" pb="30px">
           <Flex justifyContent="space-between" alignItems="center">
-            <Logo src="/logo.png" />
+            <ButtonLink to="https://www.varsoe.com" variant="transparent">
+              <Logo src="/logo.png" />
+            </ButtonLink>
             <Button variant="transparent" fontSize={theme.fontSizes[2]} onClick={() => history.push('/signup')}>
               Sign Up
             </Button>
           </Flex>
           <Box mt="120px">
-            <Typography.Heading type="h4">Welcome back,</Typography.Heading>
+            <Typography.Heading type="h5">Welcome back,</Typography.Heading>
             <Typography.Paragraph>Alright. Let’s get back right into it.</Typography.Paragraph>
           </Box>
           <BoxWithBorder py="32px" borderBottom="1px solid #E6E7EA">

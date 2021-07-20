@@ -25,10 +25,15 @@ const InputStyle = styled.input<InputProps>`
   &::placeholder {
     color: ${(props) => props.theme.colors.black[200]};
   }
-  &::focus {
+  &:hover {
+    box-shadow: 0 0 0 4px ${(props) => props.theme.colors.blue[100]};
+  }
+  &:focus {
     border-radius: 8px;
     outline: none;
-    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.blue[600]};
+    border-color: ${(props) => props.theme.colors.blue[400]};
+    box-shadow: 0 0 0 4px ${(props) => props.theme.colors.blue[100]};
+    /* box-shadow: 0 0 0 2px ${(props) => props.theme.colors.blue[600]}; */
   }
 `;
 
@@ -51,7 +56,7 @@ const Input: React.FC<InputHTMLAttributes<HTMLInputElement>> = ({ type, ...rest 
           setShow((s) => !s);
         }}
       >
-        show
+        {show ? 'hide' : 'show'}
       </Button>
     </Box>
   );

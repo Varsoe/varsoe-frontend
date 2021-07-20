@@ -15,6 +15,7 @@ import Filter from '../../../icons/Filter';
 import InvoiceIcon from '../../../icons/InvoiceIcon';
 import { BoxWithBorder } from '../styles';
 import InvoiceDetails from './components/InvoiceDetails';
+import { DesktopContainer } from './ViewInvoice';
 
 export interface DashboardIndexProps {}
 interface DashboardCardProps {}
@@ -29,6 +30,7 @@ const DashboardCard = styled.div<DashboardCardProps>`
     border: none;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
   }
 `;
 
@@ -97,13 +99,15 @@ const Chart = () => (
           <stop offset="78.34%" stopColor="rgba(5, 85, 255)" stopOpacity={0} />
         </linearGradient>
       </defs>
-      <XAxis
-        dataKey="name"
-        axisLine={false}
-        tickLine={false}
-        padding={{ left: 10 }}
-        tick={{ color: '#848996', fontSize: isMobile ? '10px' : '14px' }}
-      />
+      <DesktopContainer>
+        <XAxis
+          dataKey="name"
+          axisLine={false}
+          tickLine={false}
+          padding={{ left: 10 }}
+          tick={{ color: '#848996', fontSize: isMobile ? '10px' : '14px' }}
+        />
+      </DesktopContainer>
       <Tooltip />
       <Area type="monotone" dataKey="uv" stroke="#0555FF" fillOpacity={1} fill="url(#colorUv)" />
     </AreaChart>
@@ -147,12 +151,12 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
   const history = useHistory();
   const theme = React.useContext(ThemeContext);
   const [showInvoice, setShowInvoice] = React.useState(false);
-  const [activeAmount, setActiveAmount] = React.useState('amountDue');
+  const [activeAmount, setActiveAmount] = React.useState('amount-due');
   const [amountToShow, setAmountToShow] = React.useState(false);
   const [tableDropDown, setTableDropDown] = React.useState<{ [key: string]: boolean }>({});
 
   return (
-    <Box pt="40px" pb="100px">
+    <Box pt="0px" pb="100px">
       <InvoiceDetails show={showInvoice} setShowInvoice={setShowInvoice} />
       <WelcomeSection alignItems="center" justifyContent="space-between">
         <Typography.Heading type="h5">Welcome Damola,</Typography.Heading>
@@ -174,23 +178,22 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
           right={false}
           header={
             <Flex alignItems="center">
-              <Typography.Paragraph textTransform="capitalize" color="primary">
+              <Typography.Paragraph textTransform="capitalize" color={theme.colors.blue[600]}>
                 {activeAmount.replace('-', ' ')}
               </Typography.Paragraph>
-              <Box ml="2">
+              <Box ml="4px">
                 <svg
+                  fill={theme.colors.blue[600]}
                   width="8"
                   height="8"
                   viewBox="0 0 12 8"
-                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   style={{ transform: 'scale(0.5)' }}
                 >
                   <path
-                    opacity="0.64"
+                    fill={theme.colors.blue[600]}
+                    stroke={theme.colors.blue[600]}
                     d="M5.29289 6.29289L1.70711 2.70711C1.07714 2.07714 1.52331 1 2.41421 1H9.58579C10.4767 1 10.9229 2.07714 10.2929 2.70711L6.70711 6.29289C6.31658 6.68342 5.68342 6.68342 5.29289 6.29289Z"
-                    fill="#08132D"
-                    stroke="#08132D"
                   />
                 </svg>
               </Box>
@@ -245,9 +248,9 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
             </DropDownItem>
           </Box>
         </DropDown>
-        <Box marginRight="20px" marginBottom="20px">
+        <Box marginRight="20px" marginBottom="24px">
           <Flex alignItems="center">
-            <Typography.Heading type="h5" mr="5px">
+            <Typography.Heading type="h4" mr="4px" mt="8px">
               $45,000
             </Typography.Heading>
             <Typography.Paragraph fontSize={1} color={theme.colors.statusGreen}>
@@ -264,12 +267,12 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
           Create Invoice
         </Button>
       </Mobile>
-      <Box mt="46px">
+      <Box mt="40px">
         <DashboardCard>
           <Flex flexDirection="column" justifyContent="space-between" flex="1">
             <Flex height="100px" justifyContent="space-between" flexWrap="wrap">
               <StatBox marginRight="20px" marginBottom="20px">
-                <Typography.Paragraph fontSize={1}>Amount Dues</Typography.Paragraph>
+                <Typography.Paragraph fontSize={1}>Amount Due</Typography.Paragraph>
                 <Flex alignItems="center">
                   <Typography.Heading type="h5" mr="5px">
                     $45,000
@@ -314,13 +317,13 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
               </StatBox>
               <FilterContainer>
                 <FilterGroup justifyContent="space-between" alignItems="center" height="50%">
-                  <FilterButton variant="transparent" color={theme.colors.black[600]} fontSize={theme.fontSizes[1]}>
+                  <FilterButton variant="transparent" color={theme.colors.black[300]} fontSize={theme.fontSizes[1]}>
                     1 month
                   </FilterButton>
                   <FilterButton
                     variant="transparent"
                     ml="20px"
-                    color={theme.colors.black[600]}
+                    color={theme.colors.blue[600]}
                     fontSize={theme.fontSizes[1]}
                   >
                     6 month
@@ -328,7 +331,7 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                   <FilterButton
                     variant="transparent"
                     ml="20px"
-                    color={theme.colors.black[600]}
+                    color={theme.colors.black[300]}
                     fontSize={theme.fontSizes[1]}
                   >
                     1 year
@@ -336,7 +339,7 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
                   <FilterButton
                     variant="transparent"
                     ml="20px"
-                    color={theme.colors.black[600]}
+                    color={theme.colors.black[300]}
                     fontSize={theme.fontSizes[1]}
                   >
                     Custom
@@ -429,9 +432,7 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
       </DesktopTableView>
       <Mobile>
         <Flex alignItems="center" justifyContent="space-between">
-          <Typography.Heading type="h5" mr="15px">
-            All Invoices
-          </Typography.Heading>
+          <Typography.Paragraph mr="15px">All Invoices</Typography.Paragraph>
           <Button variant="transparent">Filter</Button>
         </Flex>
         <MobileTableGrid>

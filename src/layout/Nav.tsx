@@ -5,7 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import MobileHambuger from '../icons/MobileHambuger';
 import Typography from '../components/atoms/Typography';
-import Button from '../components/atoms/Form/Button';
+import Button, { ButtonLink } from '../components/atoms/Form/Button';
 import { Mobile } from '../pages/Dashboard/Invoices';
 import { BoxWithBorder } from '../pages/Dashboard/styles';
 import CaretRight from '../icons/CaretRight';
@@ -129,7 +129,9 @@ const Nav: React.FC<NavProps> = () => {
   const [first, path] = location.pathname.split('/');
   return (
     <NavContainer>
+      {/* <ButtonLink to="https://www.varsoe.com" variant="transparent"> */}
       <Logo src="/logo.png" />
+      {/* </ButtonLink> */}
       <Mobile>
         <Button variant="transparent" onClick={() => setShowMobileNav(true)} className="hamburger">
           <MobileHambuger />
@@ -137,7 +139,7 @@ const Nav: React.FC<NavProps> = () => {
       </Mobile>
       {/* </Button> */}
       <Mobile>
-        <Typography.Heading type="h5" textTransform="capitalize">
+        <Typography.Heading type="h6" textTransform="capitalize">
           {path || 'dashboard'}
         </Typography.Heading>
       </Mobile>

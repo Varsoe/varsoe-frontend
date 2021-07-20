@@ -114,7 +114,34 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   </ButtonStyle>
 );
 
-export type ButtonLinkProps = LinkProps & ButtonProps & { variant?: Variants };
+export type ButtonLinkProps = LinkProps & ButtonProps & { variant?: Variants; outside?: boolean };
+const LinkStyle2 = styled.a<ButtonProps>`
+  color: ${(props) => props.color || theme.colors.blue[600]};
+  text-decoration: none;
+  display: block;
+  font-weight: ${({ theme: t }) => t.fontWeights.medium};
+  font-size: ${(props) => props.fontSize};
+  ${({ mb }) =>
+    mb &&
+    css`
+      margin-bottom: ${mb};
+    `}
+  ${({ mt }) =>
+    mt &&
+    css`
+      margin-top: ${mt};
+    `}
+  ${({ mr }) =>
+    mr &&
+    css`
+      margin-right: ${mr};
+    `}
+  ${({ ml }) =>
+    ml &&
+    css`
+      margin-left: ${ml};
+    `}
+`;
 const LinkStyle = styled(Link)<ButtonProps>`
   color: ${(props) => props.color || theme.colors.blue[600]};
   text-decoration: none;
@@ -145,11 +172,20 @@ const LinkStyle = styled(Link)<ButtonProps>`
 export const ButtonLink: React.FC<React.PropsWithChildren<ButtonLinkProps>> = ({
   variant = 'transparent',
   children,
+  outside,
   ...rest
 }) => (
-  <LinkStyle variant={variant} {...rest}>
-    {children}
-  </LinkStyle>
+  <>
+    {outside ? (
+      <LinkStyle variant={variant} {...rest}>
+        {children}
+      </LinkStyle>
+    ) : (
+      <LinkStyle2 variant={variant} {...rest}>
+        {children}
+      </LinkStyle2>
+    )}
+  </>
 );
 
 Button.defaultProps = {

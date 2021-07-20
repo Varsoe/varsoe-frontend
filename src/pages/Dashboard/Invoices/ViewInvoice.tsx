@@ -32,7 +32,7 @@ const ViewInvoice: React.FC<ViewInvoiceProps> = () => {
   const theme = React.useContext(ThemeContext);
   const [showOptions, setShowOptions] = React.useState(false);
   return (
-    <Box mt="40px" mb="80px">
+    <Box mt="0px" mb="80px">
       <Button
         onClick={() => history.goBack()}
         variant="transparent"
@@ -130,7 +130,7 @@ const ViewInvoice: React.FC<ViewInvoiceProps> = () => {
             <Typography.Paragraph fontSize={1} color={theme.colors.black[400]}>
               Created On
             </Typography.Paragraph>
-            <Typography.Paragraph fontWeight="medium" mt="0px">
+            <Typography.Paragraph fontWeight="medium" mt="0px" fontSize={1}>
               24 Mar, 2021
             </Typography.Paragraph>
           </Box>
@@ -138,7 +138,7 @@ const ViewInvoice: React.FC<ViewInvoiceProps> = () => {
             <Typography.Paragraph fontSize={1} color={theme.colors.black[400]}>
               Due on
             </Typography.Paragraph>
-            <Typography.Paragraph fontWeight="medium" mt="0px">
+            <Typography.Paragraph fontWeight="medium" mt="0px" fontSize={1}>
               24 Mar, 2021
             </Typography.Paragraph>
           </Box>
@@ -225,7 +225,7 @@ const ViewInvoice: React.FC<ViewInvoiceProps> = () => {
               <Typography.Paragraph fontSize={1} color={theme.colors.black[400]} mt="10px">
                 Total
               </Typography.Paragraph>
-              <Typography.Heading type="h5">$3,840.00</Typography.Heading>
+              <Typography.Paragraph fontWeight="bold">$3,840.00</Typography.Paragraph>
             </Flex>
           </Box>
         </Flex>

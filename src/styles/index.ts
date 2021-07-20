@@ -26,6 +26,7 @@ body {
 button, input, select {
   font-family: "Wigrum";
   text-transform: capitalize;
+  font-size: 1.6rem;
 }
 
 .DayPickerInput {

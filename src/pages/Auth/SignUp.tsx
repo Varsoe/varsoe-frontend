@@ -100,7 +100,9 @@ const SignUp: React.FC<SignUpProps> = () => {
         <YellowBg />
         <Content pt="28px" maxWidth="600px" margin="0 auto" width="100%" px="20px" pb="30px">
           <Flex justifyContent="space-between" alignItems="center">
-            <Logo src="/logo.png" />
+            <ButtonLink to="https://www.varsoe.com" variant="transparent">
+              <Logo src="/logo.png" />
+            </ButtonLink>
             <Button
               variant="transparent"
               fontSize={theme.fontSizes[2]}
@@ -112,7 +114,7 @@ const SignUp: React.FC<SignUpProps> = () => {
             </Button>
           </Flex>
           <Box mt="120px">
-            <Typography.Heading type="h4">Welcome to Varsoe</Typography.Heading>
+            <Typography.Heading type="h5">Welcome to Varsoe</Typography.Heading>
             <Typography.Paragraph>Let’s make your life easier.</Typography.Paragraph>
           </Box>
           <BoxWithBorder py="32px" borderBottom="1px solid #E6E7EA">
@@ -133,10 +135,10 @@ const SignUp: React.FC<SignUpProps> = () => {
             <Form.FormGroup mb="40px">
               <Form.Input placeholder="email" />
             </Form.FormGroup>
-            <Form.FormGroup mb="40px">
+            <Form.FormGroup mb="0px">
               <Form.Input placeholder="Password" type="password" />
             </Form.FormGroup>
-            <Flex alignItems="center" py="20px" flexWrap="wrap">
+            <Flex alignItems="center" py="16px" flexWrap="wrap" mb="40px">
               <Typography.Paragraph color={theme.colors.black[400]}>I accept the</Typography.Paragraph>
               <ButtonLink variant="transparent" fontSize={theme.fontSizes[2]} ml="2px" mr="2px" to="/">
                 Terms of Use
@@ -166,8 +168,8 @@ const SignUp: React.FC<SignUpProps> = () => {
             <Ellipse style={{ marginRight: '20px' }} />
             <Ellipse />
           </Flex>
-          <Box marginBottom="20px">
-            <Typography.Heading type="h3" color={theme.colors.white}>
+          <Box marginBottom="48px">
+            <Typography.Heading type="h5" color={theme.colors.white}>
               Invoices
             </Typography.Heading>
             <Typography.Paragraph color={theme.colors.white}>Talk about invoicing here</Typography.Paragraph>
@@ -180,7 +182,7 @@ const SignUp: React.FC<SignUpProps> = () => {
             marginLeft: '60px',
             width: '100%',
             right: '-50px',
-            top: '50%',
+            top: '48%',
             transform: 'translateY(-48%)',
             zIndex: 3,
           }}
