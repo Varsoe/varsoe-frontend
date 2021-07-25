@@ -10,7 +10,7 @@ const Container = styled.div`
   padding: 0 20px;
   position: relative;
   z-index: 3;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 `;
 export const Bg1 = styled(Box)`
   position: absolute;

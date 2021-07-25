@@ -89,6 +89,7 @@ const Heading = styled(HeadingTag)<TextProps>`
   line-height: ${(props) => tagMapping[props.type].lh || props.theme.lineHeights[props.type]};
   font-weight: ${(props) => (props.fontWeight ? props.fontWeight : props.theme.fontWeights.regular)};
   margin: 0;
+  text-align: ${(props) => (props.textAlign ? props.textAlign : 'left')};
   text-transform: ${(props) => props.textTransform};
   ${({ mb }) =>
     mb &&

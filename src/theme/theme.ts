@@ -1,6 +1,5 @@
 const fontSizes = ['1.2rem', '1.4rem', '1.6rem', '2.0rem', '2.4rem', '3.2rem', '4.8rem', '6.4rem'];
 export const theme = {
-  breakpoints: ['40em', '52em', '64em'],
   fontSizes,
   colors: {
     white: '#fff',
@@ -9,6 +8,7 @@ export const theme = {
     statusGreen: '#005E04',
     statusRed: '#CA003A',
     selectBg: 'rgba(8, 19, 45, 0.04)',
+    breakpoints: ['930px', '52em', '64em'],
     green: {
       600: '#01BC08',
       500: '#2BC731',

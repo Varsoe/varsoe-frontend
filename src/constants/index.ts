@@ -9,4 +9,6 @@ export const statusMapping: StatusMapping = {
   sent: { text: 'Sent', color: 'blue' },
   paid: { text: 'Paid', color: 'green' },
   overdue: { text: 'Overdue', color: 'red' },
+  successful: { text: 'Successful', color: 'green' },
+  failed: { text: 'Failed', color: 'red' },
 };

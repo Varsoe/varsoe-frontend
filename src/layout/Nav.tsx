@@ -11,6 +11,7 @@ import { BoxWithBorder } from '../pages/Dashboard/styles';
 import CaretRight from '../icons/CaretRight';
 import CloseModalIcon from '../icons/CloseModalIcon';
 import { theme } from '../theme/theme';
+import { DesktopContainer } from '../pages/Dashboard/Invoices/ViewInvoice';
 
 export interface NavProps {}
 const NavContainer = styled.div`
@@ -59,7 +60,7 @@ const Logo = styled.img`
   object-fit: contain;
   display: inline-block;
   @media (max-width: 903px) {
-    display: none;
+    display: none !important;
   }
 `;
 export const UserAvatar = styled(BoxWithBorder)`
@@ -130,7 +131,9 @@ const Nav: React.FC<NavProps> = () => {
   return (
     <NavContainer>
       {/* <ButtonLink to="https://www.varsoe.com" variant="transparent"> */}
-      <Logo src="/logo.png" />
+      <DesktopContainer>
+        <Logo src="/logo.png" />
+      </DesktopContainer>
       {/* </ButtonLink> */}
       <Mobile>
         <Button variant="transparent" onClick={() => setShowMobileNav(true)} className="hamburger">

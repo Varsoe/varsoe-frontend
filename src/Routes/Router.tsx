@@ -5,11 +5,12 @@ import Loader from '../components/Loader';
 import DashboardRoutes from './DashboardRoutes';
 import Invoices from '../pages/Dashboard/Invoices';
 import Payment from '../pages/Dashboard/Payment';
-import Customers from '../pages/Dashboard/Customers';
+import Customers from '../pages/Dashboard/Customer';
 import ViewInvoice from '../pages/Dashboard/Invoices/ViewInvoice';
 import CreateInvoice from '../pages/Dashboard/Invoices/CreateInvoice';
 import SignUp from '../pages/Auth/SignUp';
 import ForgotPassword from '../pages/Auth/ForgotPassword';
+import ViewCustomer from '../pages/Dashboard/Customer/ViewCustomer';
 
 const Dashboard = React.lazy(() => import('../pages/Dashboard/Home'));
 const Login = React.lazy(() => import('../pages/Auth/Login'));
@@ -43,6 +44,9 @@ const RouterComponent: React.FC = () => (
         </DashboardRoutes>
         <DashboardRoutes path="/customers" exact>
           <Customers />
+        </DashboardRoutes>
+        <DashboardRoutes path="/customers/view" exact>
+          <ViewCustomer />
         </DashboardRoutes>
       </Switch>
     </Suspense>

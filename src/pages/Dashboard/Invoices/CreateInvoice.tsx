@@ -85,6 +85,7 @@ const CreateInvoice: React.FC<CreateInvoiceProps> = () => {
   const [showCustomerDropdown, setShowCustomerDropdown] = React.useState(false);
   const [showProjectDropDown, setShowProjectDropDown] = React.useState(false);
   const [showInvoiceDropDown, setShowInvoiceDropDown] = React.useState(false);
+  // const [showAddCustomerModal, setShowAddCustomerModal] = React.useState(true);
   const border = '1px solid #E6E7EA';
   return (
     <>

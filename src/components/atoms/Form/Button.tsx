@@ -172,19 +172,12 @@ const LinkStyle = styled(Link)<ButtonProps>`
 export const ButtonLink: React.FC<React.PropsWithChildren<ButtonLinkProps>> = ({
   variant = 'transparent',
   children,
-  outside,
   ...rest
 }) => (
   <>
-    {outside ? (
-      <LinkStyle variant={variant} {...rest}>
-        {children}
-      </LinkStyle>
-    ) : (
-      <LinkStyle2 variant={variant} {...rest}>
-        {children}
-      </LinkStyle2>
-    )}
+    <LinkStyle variant={variant} {...rest}>
+      {children}
+    </LinkStyle>
   </>
 );
 

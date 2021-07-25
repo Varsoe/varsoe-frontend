@@ -15,6 +15,7 @@ import Filter from '../../../icons/Filter';
 import InvoiceIcon from '../../../icons/InvoiceIcon';
 import { BoxWithBorder } from '../styles';
 import InvoiceDetails from './components/InvoiceDetails';
+import InvoiceTable from './components/InvoiceTable';
 import { DesktopContainer } from './ViewInvoice';
 
 export interface DashboardIndexProps {}
@@ -59,7 +60,7 @@ const FilterContainer = styled(Box)`
   }
 `;
 
-const DesktopTableView = styled(Box)`
+export const DesktopTableView = styled(Box)`
   @media (max-width: 930px) {
     display: none;
   }
@@ -153,10 +154,9 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
   const [showInvoice, setShowInvoice] = React.useState(false);
   const [activeAmount, setActiveAmount] = React.useState('amount-due');
   const [amountToShow, setAmountToShow] = React.useState(false);
-  const [tableDropDown, setTableDropDown] = React.useState<{ [key: string]: boolean }>({});
 
   return (
-    <Box pt="0px" pb="100px">
+    <Box pt="40px" pb="100px" sx={{ pb: '0px' }}>
       <InvoiceDetails show={showInvoice} setShowInvoice={setShowInvoice} />
       <WelcomeSection alignItems="center" justifyContent="space-between">
         <Typography.Heading type="h5">Welcome Damola,</Typography.Heading>
@@ -360,75 +360,7 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
             Filter
           </Button>
         </Flex>
-        <Table.Table>
-          <Table.Tr>
-            <Table.Th>Status</Table.Th>
-            <Table.Th>Date</Table.Th>
-            <Table.Th>Client</Table.Th>
-            <Table.Th>Project</Table.Th>
-            <Table.Th>Amount</Table.Th>
-            <Table.Th>Quick actions</Table.Th>
-          </Table.Tr>
-          <Table.TBody>
-            {tableData.map(({ id, status, date, name, project, amount }) => (
-              <Table.Tr key={id}>
-                <Table.Td>
-                  <Badge type={statusMapping[status].color}>{statusMapping[status].text}</Badge>
-                </Table.Td>
-                <Table.Td>{date}</Table.Td>
-                <Table.Td>{name}</Table.Td>
-                <Table.Td>{project}</Table.Td>
-                <Table.Td>
-                  <Typography.Paragraph color={theme.colors.green[600]}>{amount}</Typography.Paragraph>
-                </Table.Td>
-                <Table.Td>
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <Button variant="transparent" onClick={() => setShowInvoice(true)}>
-                      View
-                    </Button>
-                    <Box>
-                      <DropDown
-                        width="200px"
-                        isOpen={!!tableDropDown[id]}
-                        setIsOpen={(s) => {
-                          setTableDropDown({ ...tableDropDown, [id]: s });
-                        }}
-                      >
-                        <Box>
-                          <DropDownItem>
-                            <ButtonLink variant="transparent" to="/invoices/view" color={theme.colors.black[400]}>
-                              View
-                            </ButtonLink>
-                          </DropDownItem>
-                          <DropDownItem>
-                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                              Edit
-                            </ButtonLink>
-                          </DropDownItem>
-                          <DropDownItem>
-                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                              Create payment link
-                            </ButtonLink>
-                          </DropDownItem>
-                          <DropDownItem>
-                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                              Duplicate
-                            </ButtonLink>
-                          </DropDownItem>
-                          <DropDownItem>
-                            <ButtonLink variant="transparent" to="/" color={theme.colors.black[400]}>
-                              Delete
-                            </ButtonLink>
-                          </DropDownItem>
-                        </Box>
-                      </DropDown>
-                    </Box>
-                  </Flex>
-                </Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.TBody>
-        </Table.Table>
+        <InvoiceTable />
       </DesktopTableView>
       <Mobile>
         <Flex alignItems="center" justifyContent="space-between">

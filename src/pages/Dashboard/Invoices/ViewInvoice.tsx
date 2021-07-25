@@ -16,6 +16,7 @@ import { InvoiceItemsContainer, PageContainer, PaymentLink } from './styled';
 export interface ViewInvoiceProps {}
 
 export const MobileContainer = styled(Box)`
+  display: none;
   @media (max-width: 930px) {
     display: block;
   }

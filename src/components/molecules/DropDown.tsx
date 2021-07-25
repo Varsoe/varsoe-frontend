@@ -31,7 +31,7 @@ const DropDownBody = styled(motion(Box))`
   min-height: 100px;
   position: absolute;
   text-align: left;
-  z-index: 3;
+  z-index: 20;
 `;
 const DropDownContainer = styled(Box)`
   position: relative;
