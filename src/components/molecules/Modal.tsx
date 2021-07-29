@@ -24,6 +24,7 @@ const ModalBg = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: auto;
 `;
 
 const ModalContent = styled(Box)`
@@ -36,6 +37,11 @@ const ModalContent = styled(Box)`
   flex-direction: column;
   background-color: white;
   padding: 24px;
+  @media (max-width: 500px) {
+    margin-top: 150px;
+    margin-bottom: 50px;
+    width: 95%;
+  }
   /* position: relative; */
 `;
 
