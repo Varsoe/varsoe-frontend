@@ -5,12 +5,14 @@ interface BoxWithBorderProps {
   borderRadius?: string;
   border?: string;
   borderBottom?: string;
+  borderTop?: string;
 }
 
 export const BoxWithBorder = styled(Box)<BoxWithBorderProps>`
   border-radius: ${(props) => props.borderRadius};
   border: ${(props) => props.border};
   border-bottom: ${(props) => props.borderBottom};
+  border-top: ${(props) => props.borderTop};
 `;
 
 interface FlexWithBorderProps {

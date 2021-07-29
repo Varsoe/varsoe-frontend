@@ -91,6 +91,29 @@ const FormGroup = styled(Box)<FormGroupProps>`
     `}
 `;
 
+type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  full?: boolean;
+};
+const TextArea = styled.textarea<TextAreaProps>`
+  border: 1px solid #ced0d5;
+  border-radius: 8px;
+  width: ${(props) => '100%'};
+  padding: 16px 12px;
+  &::placeholder {
+    color: ${(props) => props.theme.colors.black[200]};
+  }
+  &:hover {
+    box-shadow: 0 0 0 4px ${(props) => props.theme.colors.blue[100]};
+  }
+  &:focus {
+    border-radius: 8px;
+    outline: none;
+    border-color: ${(props) => props.theme.colors.blue[400]};
+    box-shadow: 0 0 0 4px ${(props) => props.theme.colors.blue[100]};
+    /* box-shadow: 0 0 0 2px ${(props) => props.theme.colors.blue[600]}; */
+  }
+`;
+
 export default {
   Label: FormLabel,
   FormGroup,
@@ -99,4 +122,5 @@ export default {
   Input,
   SelectAdd,
   Date,
+  TextArea,
 };

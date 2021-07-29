@@ -81,6 +81,7 @@ export const InputGroup = styled(Flex)`
   & > *:last-child {
     margin-right: 0;
   }
+
   @media (max-width: 600px) {
     display: block !important;
     & > * {
@@ -89,6 +90,16 @@ export const InputGroup = styled(Flex)`
     }
     & > *:last-child {
       margin-bottom: 0;
+    }
+  }
+  &.mobile {
+    display: flex !important;
+    & > * {
+      margin-right: 16px;
+      flex: 1;
+    }
+    & > *:last-child {
+      margin-right: 0;
     }
   }
 `;
