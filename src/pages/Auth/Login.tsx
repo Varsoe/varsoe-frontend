@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { Box, Flex } from 'rebass';
 import styled from 'styled-components';
@@ -9,6 +10,8 @@ import Apple from '../../icons/Apple';
 import Google from '../../icons/Google';
 import { theme } from '../../theme/theme';
 import { BoxWithBorder, FlexWithBorder } from '../Dashboard/styles';
+import { LoginRequest } from './service/api';
+import { useMutationLogin } from './service/apihooks';
 import { AuthButtons, Content, Logo, YellowBg } from './SignUp';
 
 export interface LoginProps {}
@@ -29,6 +32,19 @@ const Grid = styled(Box)`
 `;
 const Login: React.FC<LoginProps> = () => {
   const history = useHistory();
+  const [form, setForm] = useState<LoginRequest>({ email: '', password: '' });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+  const mutation = useMutationLogin();
+  const handleSubmit = () => {
+    console.log('here');
+    mutation.mutate(form);
+  };
+
+  console.log('data', mutation.data);
   return (
     <Grid>
       <Box style={{ position: 'relative' }} overflowX="hidden">
@@ -58,10 +74,16 @@ const Login: React.FC<LoginProps> = () => {
           </BoxWithBorder>
           <Box mt="32px">
             <Form.FormGroup mb="40px">
-              <Form.Input placeholder="email" />
+              <Form.Input placeholder="email" name="email" value={form.email} onChange={handleChange} />
             </Form.FormGroup>
             <Form.FormGroup mb="10px">
-              <Form.Input placeholder="Password" type="password" />
+              <Form.Input
+                placeholder="Password"
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+              />
             </Form.FormGroup>
             <Flex alignItems="center" pb="40px">
               <Typography.Paragraph color={theme.colors.black[400]}>Forgot Password</Typography.Paragraph>
@@ -76,7 +98,9 @@ const Login: React.FC<LoginProps> = () => {
               </Button>
             </Flex>
           </Box>
-          <Button variant="primary">Login</Button>
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
+            Login
+          </Button>
         </Content>
       </Box>
       <Bg
