@@ -2,6 +2,7 @@ import { Box, Flex } from 'rebass';
 import * as React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router';
+import { useState } from 'react';
 import Typography from '../../components/atoms/Typography';
 import RegisterBg from '../../icons/RegisterBg';
 import Button, { ButtonLink } from '../../components/atoms/Form/Button';
@@ -13,6 +14,8 @@ import { theme } from '../../theme/theme';
 import LargeCheck from '../../icons/LargeCheck';
 import Ellipse from '../../icons/Ellipse';
 import EllipseFull from '../../icons/EllipseFull';
+import { RegisterRequest } from './service/api';
+import { useMutationRegister } from './service/apihooks';
 
 export interface SignUpProps {}
 export const Logo = styled.img`
@@ -105,6 +108,20 @@ export const InputGroup = styled(Flex)`
 `;
 const SignUp: React.FC<SignUpProps> = () => {
   const history = useHistory();
+  const [form, setForm] = useState<RegisterRequest>({ email: '', password: '', firstName: '', lastName: '' });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+  const mutation = useMutationRegister();
+  const handleSubmit = () => {
+    mutation.mutate(form, {
+      onSuccess: () => {
+        history.push('/');
+      },
+    });
+  };
   return (
     <Grid>
       <Box style={{ position: 'relative' }} overflowX="hidden">
@@ -140,14 +157,14 @@ const SignUp: React.FC<SignUpProps> = () => {
           </BoxWithBorder>
           <Box mt="32px">
             <InputGroup mb="40px">
-              <Form.Input placeholder="First name" />
-              <Form.Input placeholder="Last name" />
+              <Form.Input placeholder="First name" onChange={handleChange} name="firstName" />
+              <Form.Input placeholder="Last name" onChange={handleChange} name="lastName" />
             </InputGroup>
             <Form.FormGroup mb="40px">
-              <Form.Input placeholder="email" />
+              <Form.Input placeholder="email" onChange={handleChange} name="email" />
             </Form.FormGroup>
             <Form.FormGroup mb="0px">
-              <Form.Input placeholder="Password" type="password" />
+              <Form.Input placeholder="Password" type="password" onChange={handleChange} name="password" />
             </Form.FormGroup>
             <Flex alignItems="center" py="16px" flexWrap="wrap" mb="40px">
               <Typography.Paragraph color={theme.colors.black[400]}>I accept the</Typography.Paragraph>
@@ -161,7 +178,9 @@ const SignUp: React.FC<SignUpProps> = () => {
               </ButtonLink>
             </Flex>
           </Box>
-          <Button variant="primary">Create Account</Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Create Account
+          </Button>
         </Content>
       </Box>
       <Bg overflowY="hidden" height="100vh">

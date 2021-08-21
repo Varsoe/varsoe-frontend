@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Box, Flex } from 'rebass';
 import styled, { css } from 'styled-components';
 import * as React from 'react';
@@ -74,9 +75,20 @@ const ButtonStyle = styled.button<ButtonProps & React.ButtonHTMLAttributes<HTMLB
       height: 32px;
     }
   }
+  &.smallsvg {
+    width: 12px;
+    height: 12px;
+  }
+  // eslint-disable-next-line @typescript-eslint/indent
   svg {
     width: 24px;
     height: 24px;
+    ${({ svgSize }) =>
+    svgSize &&
+      css`
+        width: ${svgSize};
+        max-height: ${svgSize};
+      `}
   }
 `;
 
@@ -93,6 +105,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   ml?: string;
   mb?: string;
   mt?: string;
+  svgSize?: string;
   onClick?: () => void;
 }
 

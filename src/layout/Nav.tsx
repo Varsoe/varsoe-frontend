@@ -12,6 +12,8 @@ import CaretRight from '../icons/CaretRight';
 import CloseModalIcon from '../icons/CloseModalIcon';
 import { theme } from '../theme/theme';
 import { DesktopContainer } from '../pages/Dashboard/Invoices/ViewInvoice';
+import DropDown, { DropDownItem } from '../components/molecules/DropDown';
+import { useLogout } from '../pages/Auth/service/apihooks';
 
 export interface NavProps {}
 const NavContainer = styled.div`
@@ -128,6 +130,8 @@ const Nav: React.FC<NavProps> = () => {
   const [showMobileNav, setShowMobileNav] = useState(false);
   const location = useLocation();
   const [first, path] = location.pathname.split('/');
+  const [dropdown, setDropdown] = useState<boolean>(false);
+  const logout = useLogout();
   return (
     <NavContainer>
       {/* <ButtonLink to="https://www.varsoe.com" variant="transparent"> */}
@@ -174,19 +178,41 @@ const Nav: React.FC<NavProps> = () => {
           >
             DA
           </UserAvatar>
-          <Text fontSize={[2]} color="primary" ml="2">
-            Damola Adegoke
-          </Text>
-          <Box ml="2">
-            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                opacity="0.64"
-                d="M5.29289 6.29289L1.70711 2.70711C1.07714 2.07714 1.52331 1 2.41421 1H9.58579C10.4767 1 10.9229 2.07714 10.2929 2.70711L6.70711 6.29289C6.31658 6.68342 5.68342 6.68342 5.29289 6.29289Z"
-                fill="#08132D"
-                stroke="#08132D"
-              />
-            </svg>
-          </Box>
+
+          <DropDown
+            width="100px"
+            isOpen={dropdown}
+            setIsOpen={setDropdown}
+            svgSize="12px"
+            header={
+              <Flex ml="2" alignItems="center">
+                <Text fontSize={[2]} color="primary" mr="2">
+                  Damola Adegoke
+                </Text>
+                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    opacity="0.64"
+                    d="M5.29289 6.29289L1.70711 2.70711C1.07714 2.07714 1.52331 1 2.41421 1H9.58579C10.4767 1 10.9229 2.07714 10.2929 2.70711L6.70711 6.29289C6.31658 6.68342 5.68342 6.68342 5.29289 6.29289Z"
+                    fill="#08132D"
+                    stroke="#08132D"
+                  />
+                </svg>
+              </Flex>
+            }
+          >
+            <Box>
+              <DropDownItem>
+                <Button variant="transparent" color={theme.colors.black[400]}>
+                  Profile
+                </Button>
+              </DropDownItem>
+              <DropDownItem>
+                <Button variant="transparent" color={theme.colors.black[400]} onClick={() => logout()}>
+                  Logout
+                </Button>
+              </DropDownItem>
+            </Box>
+          </DropDown>
         </Flex>
       </NavGroup>
       <MobileNavGroupBg className={showMobileNav ? 'active' : ''}>

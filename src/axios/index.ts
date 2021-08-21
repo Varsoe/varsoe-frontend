@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 // eslint-disable-next-line no-shadow
 enum StatusCode {
@@ -10,9 +10,6 @@ enum StatusCode {
 
 const headers: Readonly<Record<string, string | boolean>> = {
   Accept: 'application/json',
-  'Content-Type': 'application/json; charset=utf-8',
-  'Access-Control-Allow-Credentials': true,
-  'X-Requested-With': 'XMLHttpRequest',
 };
 
 // We can use the following function to inject the JWT token through an interceptor
@@ -46,20 +43,18 @@ class Http {
   // }
 
   initHttp() {
-    console.log('test');
     const localInstance = axios.create({
       baseURL: process.env.REACT_APP_BASE_URL,
       headers,
-      withCredentials: true,
     });
 
     localInstance.interceptors.request.use(injectToken, (error) => Promise.reject(error));
 
     localInstance.interceptors.response.use(
       (response) => response.data as AxiosResponse,
-      (error: { response: { status: number } }) => {
-        const { response } = error;
-        return this.handleError(response);
+      (error: { response: { data: { status: number; message: string } } }) => {
+        const responseData = error.response.data;
+        return this.handleError(responseData);
       }
     );
 
@@ -103,6 +98,7 @@ class Http {
         break;
       }
       case StatusCode.Unauthorized: {
+        window.location.href = '/login';
         // Handle Unauthorized
         break;
       }

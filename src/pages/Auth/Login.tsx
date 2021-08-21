@@ -40,8 +40,11 @@ const Login: React.FC<LoginProps> = () => {
   };
   const mutation = useMutationLogin();
   const handleSubmit = () => {
-    console.log('here');
-    mutation.mutate(form);
+    mutation.mutate(form, {
+      onSuccess: () => {
+        history.push('/');
+      },
+    });
   };
 
   console.log('data', mutation.data);

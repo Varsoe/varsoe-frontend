@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import { Box, Flex } from 'rebass';
 import React, { useState } from 'react';
 import Form from '../../components/atoms/Form';
@@ -7,24 +7,33 @@ import Typography from '../../components/atoms/Typography';
 import { theme } from '../../theme/theme';
 import { Logo } from './SignUp';
 import BackIcon from '../../icons/BackIcon';
-import { useMutationForgotPassword } from './service/apihooks';
+import { useMutationForgotPassword, useMutationResetPassword } from './service/apihooks';
 
-export interface ForgotPasswordProps {}
+export interface ResetPasswordProps {}
 
-const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
+function useBrowserQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+const ResetPassword: React.FC<ResetPasswordProps> = () => {
   const history = useHistory();
-
-  const [form, setForm] = useState<{ email: string }>({ email: '' });
+  const [form, setForm] = useState<{ password: string }>({ password: '' });
+  const browserQuery = useBrowserQuery();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
   };
-  const mutation = useMutationForgotPassword();
+  const mutation = useMutationResetPassword();
   const handleSubmit = () => {
-    mutation.mutate(form, {
-      onSuccess: () => {},
-    });
+    mutation.mutate(
+      { ...form, resetToken: browserQuery.get('token') },
+      {
+        onSuccess: () => {
+          history.push('/login');
+        },
+      }
+    );
   };
   return (
     <Flex flexDirection="column" maxWidth="1350px" width="100%" px="20px" margin="0 auto" minHeight="100vh">
@@ -40,20 +49,22 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
         <Flex flex="1" maxWidth="500px" width="100%" alignItems="center" flexDirection="column">
           <Box mt="20px" mb="40px" textAlign="center">
             <Typography.Heading type="h5" textAlign="center" mb="8px">
-              Forgot password
+              Reset password
             </Typography.Heading>
             <Typography.Paragraph textAlign="center">
               Enter your email address and we’ll send you a reset email.
             </Typography.Paragraph>
           </Box>
           <Box mb="40px" alignSelf="stretch">
-            <Form.Input
-              placeholder="Email address"
-              type="text"
-              name="email"
-              onChange={handleChange}
-              value={form.email}
-            />
+            <Form.FormGroup mb="10px">
+              <Form.Input
+                placeholder="Password"
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+              />
+            </Form.FormGroup>
           </Box>
           <Button variant="primary" mb="24px" onClick={handleSubmit}>
             Reset Password
@@ -73,4 +84,4 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
