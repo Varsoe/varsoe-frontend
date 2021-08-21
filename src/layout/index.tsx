@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import * as React from 'react';
 import { Box } from 'rebass';
+import { useHistory } from 'react-router';
+import { useEffect } from 'react';
 import Nav from './Nav';
+import { useUserQuery } from '../pages/Auth/service/apihooks';
+import { useAuth } from '../context/AuthContext';
+import Loader from '../components/Loader';
 
 export interface LayoutProps {}
 const Container = styled.div`
@@ -44,16 +49,35 @@ export const Bg2 = styled(Box)`
     display: none;
   }
 `;
-const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) => (
-  <Box minHeight="100vh">
-    <Bg1 />
-    <Bg2 />
-    <Container>
-      <Nav />
+const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) => {
+  const history = useHistory();
+  const userState = useUserQuery();
+  const { setUser } = useAuth();
 
-      <main>{children}</main>
-    </Container>
-  </Box>
-);
+  if (userState.isError) {
+    history.push('/login');
+  }
+
+  useEffect(() => {
+    if (userState.data) {
+      setUser(userState.data);
+    }
+  }, [setUser, userState.data]);
+
+  if (userState.isFetching) {
+    return <h1>Loading...</h1>;
+  }
+  return (
+    <Box minHeight="100vh">
+      <Bg1 />
+      <Bg2 />
+      <Container>
+        <Nav />
+
+        <main>{children}</main>
+      </Container>
+    </Box>
+  );
+};
 
 export default Layout;

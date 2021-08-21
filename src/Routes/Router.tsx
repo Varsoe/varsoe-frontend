@@ -3,18 +3,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as React from 'react';
 import Loader from '../components/Loader';
 import DashboardRoutes from './DashboardRoutes';
-import Invoices from '../pages/Dashboard/Invoices';
-import Payment from '../pages/Dashboard/Payment';
-import Customers from '../pages/Dashboard/Customer';
-import ViewInvoice from '../pages/Dashboard/Invoices/ViewInvoice';
-import CreateInvoice from '../pages/Dashboard/Invoices/CreateInvoice';
-import SignUp from '../pages/Auth/SignUp';
-import ViewCustomer from '../pages/Dashboard/Customer/ViewCustomer';
 
 const Dashboard = React.lazy(() => import('../pages/Dashboard/Home'));
 const Login = React.lazy(() => import('../pages/Auth/Login'));
 const ForgotPassword = React.lazy(() => import('../pages/Auth/ForgotPassword'));
 const ResetPassword = React.lazy(() => import('../pages/Auth/ResetPassword'));
+const SignUp = React.lazy(() => import('../pages/Auth/SignUp'));
+const CreateInvoice = React.lazy(() => import('../pages/Dashboard/Invoices/CreateInvoice'));
+const ViewInvoice = React.lazy(() => import('../pages/Dashboard/Invoices/ViewInvoice'));
+const Customers = React.lazy(() => import('../pages/Dashboard/Customer'));
+const Payment = React.lazy(() => import('../pages/Dashboard/Payment'));
+const Invoices = React.lazy(() => import('../pages/Dashboard/Invoices'));
+const ViewCustomer = React.lazy(() => import('../pages/Dashboard/Customer/ViewCustomer'));
+
 const RouterComponent: React.FC = () => (
   <Router>
     <Suspense fallback={<Loader />}>
