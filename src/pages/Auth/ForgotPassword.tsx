@@ -55,7 +55,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
               value={form.email}
             />
           </Box>
-          <Button variant="primary" mb="24px" onClick={handleSubmit}>
+          <Button variant="primary" mb="24px" onClick={handleSubmit} isLoading={mutation.isLoading}>
             Reset Password
           </Button>
           <Button

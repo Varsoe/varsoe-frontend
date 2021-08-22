@@ -47,7 +47,7 @@ const Login: React.FC<LoginProps> = () => {
     });
   };
 
-  console.log('data', mutation.data);
+  console.log('data', mutation.isLoading);
   return (
     <Grid>
       <Box style={{ position: 'relative' }} overflowX="hidden">
@@ -101,7 +101,7 @@ const Login: React.FC<LoginProps> = () => {
               </Button>
             </Flex>
           </Box>
-          <Button variant="primary" type="submit" onClick={handleSubmit}>
+          <Button variant="primary" type="submit" isLoading={mutation.isLoading} onClick={handleSubmit}>
             Login
           </Button>
         </Content>

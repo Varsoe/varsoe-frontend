@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import * as React from 'react';
 import { Link, LinkProps } from 'react-router-dom';
 import { theme } from '../../../theme/theme';
+import Loading from '../../../icons/Loading';
 
 const variantsToColorMap = {
   primary: {
@@ -106,6 +107,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   mb?: string;
   mt?: string;
   svgSize?: string;
+  isLoading?: boolean;
   onClick?: () => void;
 }
 
@@ -115,14 +117,17 @@ const Button: React.FC<React.PropsWithChildren<ButtonProps>> = ({
   children,
   shadow,
   fontSize,
+  isLoading,
   ...rest
 }) => (
   <ButtonStyle variant={variant} shadow={shadow} {...rest}>
     <Flex alignItems="center">
+     {isLoading && <Loading />}
       {Icon}
       <Box ml={Icon ? '5px' : '0px'} width="100%" fontSize={fontSize}>
         {children}
       </Box>
+     
     </Flex>
   </ButtonStyle>
 );

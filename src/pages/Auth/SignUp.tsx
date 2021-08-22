@@ -178,7 +178,7 @@ const SignUp: React.FC<SignUpProps> = () => {
               </ButtonLink>
             </Flex>
           </Box>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="primary" onClick={handleSubmit} isLoading={mutation.isLoading}>
             Create Account
           </Button>
         </Content>
