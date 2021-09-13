@@ -5,7 +5,7 @@ import { useHistory } from 'react-router';
 import { useEffect } from 'react';
 import Nav from './Nav';
 import { useUserQuery } from '../pages/Auth/service/apihooks';
-import { useAuth } from '../context/AuthContext';
+import { useAuth, User } from '../context/AuthContext';
 import Loader from '../components/Loader';
 
 export interface LayoutProps {}
@@ -60,7 +60,7 @@ const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) =>
 
   useEffect(() => {
     if (userState.data) {
-      setUser(userState.data);
+      setUser(userState.data as User);
     }
   }, [setUser, userState.data]);
 

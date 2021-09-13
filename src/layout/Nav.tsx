@@ -14,6 +14,7 @@ import { theme } from '../theme/theme';
 import { DesktopContainer } from '../pages/Dashboard/Invoices/ViewInvoice';
 import DropDown, { DropDownItem } from '../components/molecules/DropDown';
 import { useLogout } from '../pages/Auth/service/apihooks';
+import { useAuth } from '../context/AuthContext';
 
 export interface NavProps {}
 const NavContainer = styled.div`
@@ -132,6 +133,7 @@ const Nav: React.FC<NavProps> = () => {
   const [first, path] = location.pathname.split('/');
   const [dropdown, setDropdown] = useState<boolean>(false);
   const logout = useLogout();
+  const { user } = useAuth();
   return (
     <NavContainer>
       {/* <ButtonLink to="https://www.varsoe.com" variant="transparent"> */}
@@ -187,7 +189,7 @@ const Nav: React.FC<NavProps> = () => {
             header={
               <Flex ml="2" alignItems="center">
                 <Text fontSize={[2]} color="primary" mr="2">
-                  Damola Adegoke
+                  {user?.firstName} {user?.lastName}
                 </Text>
                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path

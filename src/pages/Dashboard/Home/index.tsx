@@ -10,7 +10,7 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
 
   return (
     <Box>
-      <Typography.Paragraph>Dashboard {user.firstName} </Typography.Paragraph>
+      <Typography.Paragraph>Dashboard {user?.firstName} </Typography.Paragraph>
     </Box>
   );
 };

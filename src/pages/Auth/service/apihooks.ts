@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from 'react-query';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth, User } from '../../../context/AuthContext';
 import { AuthResponse, forgotPassword, getUser, login, register, resetPassword, UserResponse } from './api';
 
 export const useMutationLogin = () => {
@@ -11,7 +11,7 @@ export const useMutationLogin = () => {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       setToken(token);
-      setUser(user);
+      setUser(user as User);
     },
     onError: (error: Error) => {
       toast.error(error.message);
@@ -26,7 +26,7 @@ export const useMutationRegister = () => {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       setToken(token);
-      setUser(user);
+      setUser(user as User);
     },
     onError: (error: Error) => {
       toast.error(error.message);
@@ -60,7 +60,7 @@ export const useLogout = (cb?: () => void) => {
   function logout() {
     localStorage.clear();
     setToken(null);
-    setUser({});
+    setUser(null);
     if (cb) {
       cb();
     }
