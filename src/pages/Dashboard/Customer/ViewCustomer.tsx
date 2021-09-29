@@ -275,7 +275,7 @@ const ViewCustomer: React.FC<ViewCustomerProps> = () => {
                 Transactions
               </TabButton>
             </Flex>
-            {activeTab === 'invoices' ? <InvoiceTable isCustomerPage /> : <TransactionsTable />}
+            {activeTab === 'invoices' ? <InvoiceTable isCustomerPage data={[]} /> : <TransactionsTable />}
           </Box>
         </PageContainer>
       </Box>

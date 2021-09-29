@@ -7,10 +7,14 @@ import DropDown, { DropDownItem } from '../../../../components/molecules/DropDow
 import Table from '../../../../components/molecules/Table';
 import { statusMapping } from '../../../../constants';
 import { theme } from '../../../../theme/theme';
+import { formatCurrency } from '../../../../utils';
+import { Invoice } from '../service/api';
 
 export interface InvoiceTableProps {
   setShowInvoice?: React.Dispatch<React.SetStateAction<boolean>>;
   isCustomerPage?: boolean;
+  data: Invoice[] | undefined;
+  setCurrentInvoice?: React.Dispatch<React.SetStateAction<Invoice | null>>;
 }
 
 export const invoiceData = [
@@ -47,8 +51,19 @@ export const invoiceData = [
     amount: '$34,0000',
   },
 ];
-const InvoiceTable: React.SFC<InvoiceTableProps> = ({ setShowInvoice, isCustomerPage }) => {
-  const [tableDropDown, setTableDropDown] = React.useState<{ [key: string]: boolean }>({});
+const InvoiceTable: React.FC<InvoiceTableProps> = ({
+  data = [],
+  setShowInvoice,
+  isCustomerPage,
+  setCurrentInvoice,
+}) => {
+  const [tableDropDown, setTableDropDown] = React.useState<{ [key: string]: boolean }>(
+    data.reduce((acc, current): Record<string, boolean> => {
+      const key = current._id;
+      acc[key] = false;
+      return acc;
+    }, {} as Record<string, boolean>)
+  );
   return (
     <Table.Table>
       <Table.Tr>
@@ -60,23 +75,29 @@ const InvoiceTable: React.SFC<InvoiceTableProps> = ({ setShowInvoice, isCustomer
         <Table.Th>Quick actions</Table.Th>
       </Table.Tr>
       <Table.TBody>
-        {invoiceData.map(({ id, status, date, name, project, amount }) => (
-          <Table.Tr key={id}>
+        {data.map((invoice) => (
+          <Table.Tr key={invoice._id}>
             <Table.Td>
-              <Badge type={statusMapping[status].color}>{statusMapping[status].text}</Badge>
+              <Badge type={statusMapping[invoice?.status]?.color}>{statusMapping[invoice?.status].text}</Badge>
             </Table.Td>
-            <Table.Td>{date}</Table.Td>
-            <Table.Td>{name}</Table.Td>
-            <Table.Td>{project}</Table.Td>
+            <Table.Td>{invoice.date}</Table.Td>
+            <Table.Td>{invoice.customer}</Table.Td>
+            <Table.Td textTransform="capitalize">{invoice.title}</Table.Td>
             <Table.Td>
-              <Flex justifyContent="space-between">
-                <Typography.Paragraph color={theme.colors.green[600]}>{amount}</Typography.Paragraph>
-                {isCustomerPage && (
+              <Typography.Paragraph color={theme.colors.green[600]}>
+                {formatCurrency(invoice.total)}
+              </Typography.Paragraph>
+            </Table.Td>
+            {isCustomerPage && (
+              <Table.Td>
+                <Flex justifyContent="space-between">
+                  {/* <Typography.Paragraph color={theme.colors.green[600]}>{invoice.total}</Typography.Paragraph> */}
+
                   <DropDown
                     width="200px"
-                    isOpen={!!tableDropDown[id]}
+                    isOpen={!!tableDropDown[invoice._id]}
                     setIsOpen={(s) => {
-                      setTableDropDown({ ...tableDropDown, [id]: s });
+                      setTableDropDown({ ...tableDropDown, [invoice._id]: s });
                     }}
                   >
                     <Box>
@@ -107,23 +128,31 @@ const InvoiceTable: React.SFC<InvoiceTableProps> = ({ setShowInvoice, isCustomer
                       </DropDownItem>
                     </Box>
                   </DropDown>
-                )}
-              </Flex>
-            </Table.Td>
+                </Flex>
+              </Table.Td>
+            )}
             {!isCustomerPage && (
               <Table.Td>
                 <Flex justifyContent="space-between" alignItems="center">
                   {setShowInvoice && (
-                    <Button variant="transparent" onClick={() => setShowInvoice(true)}>
+                    <Button
+                      variant="transparent"
+                      onClick={() => {
+                        setShowInvoice(true);
+                        if (setCurrentInvoice) {
+                          setCurrentInvoice(invoice);
+                        }
+                      }}
+                    >
                       View
                     </Button>
                   )}
                   <Box>
                     <DropDown
                       width="200px"
-                      isOpen={!!tableDropDown[id]}
+                      isOpen={tableDropDown[invoice._id]}
                       setIsOpen={(s) => {
-                        setTableDropDown({ ...tableDropDown, [id]: s });
+                        setTableDropDown({ ...tableDropDown, [invoice._id]: s });
                       }}
                     >
                       <Box>

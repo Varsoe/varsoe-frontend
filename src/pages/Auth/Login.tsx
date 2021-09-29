@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Form from '../../components/atoms/Form';
 import Button, { ButtonLink } from '../../components/atoms/Form/Button';
 import Typography from '../../components/atoms/Typography';
+import { useAuth } from '../../context/AuthContext';
 import Apple from '../../icons/Apple';
 import Google from '../../icons/Google';
 import { theme } from '../../theme/theme';
@@ -33,6 +34,7 @@ const Grid = styled(Box)`
 const Login: React.FC<LoginProps> = () => {
   const history = useHistory();
   const [form, setForm] = useState<LoginRequest>({ email: '', password: '' });
+  const { isAuth } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -47,7 +49,10 @@ const Login: React.FC<LoginProps> = () => {
     });
   };
 
-  console.log('data', mutation.isLoading);
+  if (isAuth) {
+    history.push('/');
+    return null;
+  }
   return (
     <Grid>
       <Box style={{ position: 'relative' }} overflowX="hidden">

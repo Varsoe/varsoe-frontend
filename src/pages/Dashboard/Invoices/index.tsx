@@ -6,6 +6,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { Badge } from '../../../components/atoms/Badge';
 import Button, { ButtonLink } from '../../../components/atoms/Form/Button';
 import Typography from '../../../components/atoms/Typography';
+import Loader from '../../../components/Loader';
 import DropDown, { DropDownItem } from '../../../components/molecules/DropDown';
 import Table from '../../../components/molecules/Table';
 import { statusMapping } from '../../../constants';
@@ -13,9 +14,12 @@ import { chartData } from '../../../data';
 import DropDownIcon from '../../../icons/DropDownIcon';
 import Filter from '../../../icons/Filter';
 import InvoiceIcon from '../../../icons/InvoiceIcon';
+import { formatCurrency } from '../../../utils';
 import { BoxWithBorder } from '../styles';
 import InvoiceDetails from './components/InvoiceDetails';
 import InvoiceTable from './components/InvoiceTable';
+import { Invoice } from './service/api';
+import { useInvoicesQuery } from './service/apihooks';
 import { DesktopContainer } from './ViewInvoice';
 
 export interface DashboardIndexProps {}
@@ -152,12 +156,15 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
   const history = useHistory();
   const theme = React.useContext(ThemeContext);
   const [showInvoice, setShowInvoice] = React.useState(false);
+  const [currentInvoice, setCurrentInvoice] = React.useState<Invoice | null>(null);
   const [activeAmount, setActiveAmount] = React.useState('amount-due');
   const [amountToShow, setAmountToShow] = React.useState(false);
 
+  const invoicesState = useInvoicesQuery();
+
   return (
     <Box pt="40px" pb="100px" sx={{ pb: '0px' }}>
-      <InvoiceDetails show={showInvoice} setShowInvoice={setShowInvoice} />
+      <InvoiceDetails show={showInvoice} setShowInvoice={setShowInvoice} invoice={currentInvoice} />
       <WelcomeSection alignItems="center" justifyContent="space-between">
         <Typography.Heading type="h5">Welcome Damola,</Typography.Heading>
         <Button
@@ -351,46 +358,56 @@ const DashboardIndex: React.FC<DashboardIndexProps> = () => {
           </Flex>
         </DashboardCard>
       </Box>
-      <DesktopTableView mt="64px">
-        <Flex alignItems="center">
-          <Typography.Heading type="h5" mr="15px">
-            Invoice
-          </Typography.Heading>
-          <Button variant="transparent" Icon={<Filter />}>
-            Filter
-          </Button>
-        </Flex>
-        <InvoiceTable />
-      </DesktopTableView>
-      <Mobile>
-        <Flex alignItems="center" justifyContent="space-between">
-          <Typography.Paragraph mr="15px">All Invoices</Typography.Paragraph>
-          <Button variant="transparent">Filter</Button>
-        </Flex>
-        <MobileTableGrid>
-          {tableData.map(({ id, status, date, name, project, amount }) => (
-            <BoxWithBorder
-              py="12px"
-              px="20px"
-              border="1px solid #F5F5F7"
-              borderRadius="8px"
-              key={id}
-              onClick={() => history.push('/invoices/view')}
-            >
-              <Flex justifyContent="space-between" alignItems="center">
-                <Typography.Paragraph>{name}</Typography.Paragraph>
-                <Typography.Paragraph color={theme.colors.green[600]}>{amount}</Typography.Paragraph>
-              </Flex>
-              <Flex justifyContent="space-between" alignItems="center">
-                <Typography.Paragraph color={theme.colors.black[400]}>{date}</Typography.Paragraph>
-                <Typography.Paragraph color={theme.colors.statusGreen}>
-                  <Badge type={statusMapping[status].color}>{statusMapping[status].text}</Badge>
-                </Typography.Paragraph>
-              </Flex>
-            </BoxWithBorder>
-          ))}
-        </MobileTableGrid>
-      </Mobile>
+      {invoicesState.isLoading ? (
+        <Loader height="40vh" />
+      ) : (
+        <Box>
+          <DesktopTableView mt="64px">
+            <Flex alignItems="center">
+              <Typography.Heading type="h5" mr="15px">
+                Invoice
+              </Typography.Heading>
+              <Button variant="transparent" Icon={<Filter />}>
+                Filter
+              </Button>
+            </Flex>
+            <InvoiceTable
+              data={invoicesState.data}
+              setShowInvoice={setShowInvoice}
+              setCurrentInvoice={setCurrentInvoice}
+            />
+          </DesktopTableView>
+          <Mobile>
+            <Flex alignItems="center" justifyContent="space-between">
+              <Typography.Paragraph mr="15px">All Invoices</Typography.Paragraph>
+              <Button variant="transparent">Filter</Button>
+            </Flex>
+            <MobileTableGrid>
+              {invoicesState.data?.map(({ _id, status, date, customer, title, total }) => (
+                <BoxWithBorder
+                  py="12px"
+                  px="20px"
+                  border="1px solid #F5F5F7"
+                  borderRadius="8px"
+                  key={_id}
+                  onClick={() => history.push('/invoices/view')}
+                >
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Typography.Paragraph textTransform="capitalize">{title}</Typography.Paragraph>
+                    <Typography.Paragraph color={theme.colors.green[600]}>{formatCurrency(total)}</Typography.Paragraph>
+                  </Flex>
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Typography.Paragraph color={theme.colors.black[400]}>{date}</Typography.Paragraph>
+                    <Typography.Paragraph color={theme.colors.statusGreen}>
+                      <Badge type={statusMapping[status]?.color}>{statusMapping[status]?.text}</Badge>
+                    </Typography.Paragraph>
+                  </Flex>
+                </BoxWithBorder>
+              ))}
+            </MobileTableGrid>
+          </Mobile>
+        </Box>
+      )}
     </Box>
   );
 };

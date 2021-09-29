@@ -18,7 +18,7 @@ const ViewCustomer = React.lazy(() => import('../pages/Dashboard/Customer/ViewCu
 
 const RouterComponent: React.FC = () => (
   <Router>
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader height="100vh" />}>
       <Switch>
         <Route path="/login" exact>
           <Login />

@@ -7,6 +7,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { Badge } from '../../../../components/atoms/Badge';
 import Button from '../../../../components/atoms/Form/Button';
 import Typography from '../../../../components/atoms/Typography';
+import { statusMapping } from '../../../../constants';
 import useOnClickOutside from '../../../../hooks/ClickOutsideClose';
 import Avatar from '../../../../icons/Avatar';
 import CaretDownBorder from '../../../../icons/CaretDownBorder';
@@ -14,7 +15,9 @@ import CloseIcon from '../../../../icons/CloseIcon';
 import CopyIcon from '../../../../icons/CopyIcon';
 import Folder from '../../../../icons/Folder';
 import LinkIcon from '../../../../icons/LinkIcon';
+import { formatCurrency } from '../../../../utils';
 import { BoxWithBorder, FlexWithBorder } from '../../styles';
+import { Invoice } from '../service/api';
 import { PaymentLink } from '../styled';
 
 interface InvoiceDetailsContainerProps {
@@ -23,6 +26,7 @@ interface InvoiceDetailsContainerProps {
 
 export interface InvoiceDetailsProps extends InvoiceDetailsContainerProps {
   setShowInvoice: React.Dispatch<React.SetStateAction<boolean>>;
+  invoice: Invoice | null;
 }
 const InvoiceDetailsContainer = styled(motion.div)<InvoiceDetailsContainerProps>`
   position: fixed;
@@ -80,7 +84,7 @@ export const dropDownVariants = {
   },
   collapsed: { opacity: 0, height: 0 },
 };
-const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice }) => {
+const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice, invoice }) => {
   const items = [
     {
       name: 'Email template',
@@ -103,6 +107,10 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
     setShowInvoice(false);
   };
   useOnClickOutside(previewRef, handleClickOutside);
+
+  if (!invoice) {
+    return null;
+  }
   return (
     <>
       {show && <InvoiceDetailsBg />}
@@ -131,19 +139,19 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
         </FlexWithBorder>
         <Box padding="20px 16px">
           <Flex justifyContent="space-between" alignItems="center">
-            <Typography.Heading type="h5">$2,000.00</Typography.Heading>
-            <Badge type="yellow">Pending</Badge>
+            <Typography.Heading type="h5">{formatCurrency(invoice.total)}</Typography.Heading>
+            <Badge type={statusMapping[invoice.status]?.color}>{statusMapping[invoice.status].text}</Badge>
           </Flex>
           <UserData>
             <Box marginRight="5px">
               <Avatar />
             </Box>
-            <Typography.Paragraph>Adegoke Damola</Typography.Paragraph>
+            <Typography.Paragraph>Adegoke Damola22</Typography.Paragraph>
           </UserData>
           <BoxWithBorder borderBottom={border}>
             <Typography.Paragraph color={theme.colors.black[400]}>Project</Typography.Paragraph>
             <Flex justifyContent="space-between" marginTop="8px" paddingBottom="16px">
-              <Typography.Paragraph>Eden Design System</Typography.Paragraph>
+              <Typography.Paragraph textTransform="capitalize">{invoice.title}</Typography.Paragraph>
               <Box>
                 <Folder />
               </Box>
@@ -165,7 +173,7 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
           </Box>
           <BoxWithBorder margin="24px 0" borderBottom={border} paddingBottom="16px">
             <Typography.Paragraph color={theme.colors.black[400]}>Title</Typography.Paragraph>
-            <Typography.Paragraph>Invoice level up</Typography.Paragraph>
+            <Typography.Paragraph textTransform="capitalize">{invoice.title}</Typography.Paragraph>
           </BoxWithBorder>
           <BoxWithBorder borderBottom={border}>
             <FlexWithBorder
@@ -189,10 +197,10 @@ const InvoiceDetails: React.FC<InvoiceDetailsProps> = ({ show, setShowInvoice })
                 duration: 0.35,
               }}
             >
-              {items.map(({ name, amount }) => (
-                <Flex justifyContent="space-between" padding="16px 0" key={name}>
-                  <Typography.Paragraph>{name}</Typography.Paragraph>
-                  <Typography.Paragraph>{amount}</Typography.Paragraph>
+              {invoice.items.map(({ _id, item, unit_price }) => (
+                <Flex justifyContent="space-between" padding="16px 0" key={_id}>
+                  <Typography.Paragraph>{item}</Typography.Paragraph>
+                  <Typography.Paragraph>{formatCurrency(parseFloat(unit_price))}</Typography.Paragraph>
                 </Flex>
               ))}
             </ItemsContainer>

@@ -65,7 +65,7 @@ const Layout: React.FC<React.PropsWithChildren<LayoutProps>> = ({ children }) =>
   }, [setUser, userState.data]);
 
   if (userState.isFetching) {
-    return <h1>Loading...</h1>;
+    return <Loader height="100vh" />;
   }
   return (
     <Box minHeight="100vh">

@@ -19,13 +19,14 @@ const TableContainer = styled.table<{ layout?: string }>`
   table-layout: ${(props) => (props.layout ? props.layout : 'initial')};
 `;
 
-const Td = styled.td<{ noBorder?: boolean }>`
+const Td = styled.td<{ noBorder?: boolean; textTransform?: 'uppercase' | 'lowercase' | 'capitalize' }>`
   background-color: #fff;
   padding: 16px 20px;
   font-size: ${(props) => props.theme.fontSizes[1]};
   color: ${(props) => props.theme.colors.black[400]};
   border: ${(props) => (props.noBorder ? 'none' : `1px solid ${props.theme.colors.black[20]}`)};
   border-right: ${(props) => `0px solid ${props.theme.colors.black[20]}`};
+  text-transform: ${(props) => (props.textTransform ? props.textTransform : 'lowercase')};
   &:last-child {
     border-right: ${(props) => (props.noBorder ? 'none' : `1px solid ${props.theme.colors.black[20]}`)};
     border-top-right-radius: 8px;

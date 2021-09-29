@@ -74,6 +74,5 @@ export const useUserQuery = () => {
   return useQuery<UserResponse, Error, Record<string, unknown>>('user', getUser, {
     select: (response) => response.data.user.user,
     enabled: !hasUser,
-    onError: (error: Error) => {},
   });
 };

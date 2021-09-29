@@ -14,7 +14,7 @@ export interface DropDownProps {
   hideIcon?: boolean;
   header?: React.ReactNode;
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsOpen: (type: boolean) => void;
   right?: boolean;
   svgSize?: string;
 }
@@ -61,14 +61,14 @@ const DropDown: React.FC<DropDownProps> = ({
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const handleClickOutside = () => {
+    console.log('clicked');
     setIsOpen(false);
   };
   useOnClickOutside(ref, handleClickOutside);
   const key = right ? 'right' : 'left';
-  console.log({ isOpen });
   return (
-    <DropDownContainer ref={ref}>
-      <Button variant="transparent" onClick={() => setIsOpen(true)} svgSize={svgSize}>
+    <DropDownContainer>
+      <Box variant="transparent" onClick={() => setIsOpen(true)} style={{ cursor: 'pointer' }}>
         {header ? (
           <>{header}</>
         ) : (
@@ -77,6 +77,7 @@ const DropDown: React.FC<DropDownProps> = ({
         <AnimatePresence>
           {isOpen && (
             <DropDownBody
+              ref={ref}
               style={{ [key]: 0 }}
               width={width}
               initial={{ opacity: 0 }}
@@ -94,7 +95,7 @@ const DropDown: React.FC<DropDownProps> = ({
             </DropDownBody>
           )}
         </AnimatePresence>
-      </Button>
+      </Box>
     </DropDownContainer>
   );
 };
